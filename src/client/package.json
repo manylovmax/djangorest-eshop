@@ -1,0 +1,66 @@
+{
+    "name": "webpack-5-react-boilerplate",
+    "version": "2.0.0",
+    "description": "A webpack 5 boilerplate with React",
+    "main": "index.js",
+    "author": "Per Olsen",
+    "license": "MIT",
+    "scripts": {
+      "start": "webpack serve --config config/webpack.dev.js --progress",
+      "build": "webpack --config config/webpack.prod.js",
+      "prod": "http-server ./dist -a localhost -p 8005 -o"
+    },
+    "keywords": [
+      "webpack",
+      "webpack 5",
+      "webpack boilerplate"
+    ],
+    "devDependencies": {
+      "@babel/core": "^7.12.1",
+      "@babel/plugin-proposal-class-properties": "^7.12.1",
+      "@babel/plugin-proposal-object-rest-spread": "^7.13.8",
+      "@babel/plugin-transform-arrow-functions": "^7.13.0",
+      "@babel/plugin-transform-async-to-generator": "^7.13.0",
+      "@babel/plugin-transform-runtime": "^7.13.10",
+      "@babel/preset-env": "^7.12.1",
+      "@babel/preset-react": "^7.12.7",
+      "babel-loader": "^8.1.0",
+      "clean-webpack-plugin": "^3.0.0",
+      "copy-webpack-plugin": "^6.2.1",
+      "cross-env": "^7.0.2",
+      "css-loader": "^5.0.0",
+      "css-minimizer-webpack-plugin": "^1.1.5",
+      "html-webpack-plugin": "^5.0.0-alpha.7",
+      "http-server": "^0.12.3",
+      "mini-css-extract-plugin": "^1.0.0",
+      "sass": "^1.78.0",
+      "path": "^0.12.7",
+      "postcss-loader": "^4.0.4",
+      "postcss-preset-env": "^6.7.0",
+      "sass-loader": "^10.0.3",
+      "style-loader": "^2.0.0",
+      "webpack": "^5.94.0",
+      "webpack-cli": "^5.1.4",
+      "webpack-dev-server": "^5.0.4",
+      "webpack-merge": "^6.0.1"
+    },
+    "repository": {
+      "type": "git",
+      "url": "https://github.com/persteenolsen/webpack-5-react-boilerplate"
+    },
+    "dependencies": {
+      "@babel/runtime": "^7.25.4",
+      "core-js": "^3.38.1",
+      "react": "^18.3.1",
+      "react-dom": "^18.3.1",
+      "react-hook-form": "^7.53.0",
+      "react-router-dom": "^6.26.1",
+      "redux": "^5.0.1",
+      "react-redux": "^9.1.2",
+      "whatwg-fetch": "^3.6.20",
+      "bootstrap": "^5.3.3",
+      "jquery": "^3.7.1",
+      "popper.js": "^1.16.1",
+      "axios": "^1.7.7"
+    }
+  }

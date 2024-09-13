@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+ <meta charset="UTF-8">
+    <base href="/" />
+    <title>Webpack 5 and React Boilerplate</title>
+	
+	 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+</head>
+<body>
+    
+	
+	<noscript>
+	<strong>This React app do not work properly without JavaScript enabled. Please enable it to
+		continue.</strong>
+	</noscript>
+  
+  	 <!--Note: For sure needed when using IE 11 -->
+	 <!--Babel polyfills are not working with TextArea in React Hook Forms neigther do import core-js/stable and regenerator-runtime/runtime -->
+	 <!--Note: As an alternative use import core-js/stable and regenerator-runtime/runtime in EditPost and CreatePost-->
+	 <!--<script src="https://cdnjs.cloudflare.com/ajax/libs/babel-polyfill/7.12.1/polyfill.min.js"></script>-->		 
+   
+	<div id="nocrome"></div>
+	<div id="root"></div>
+	
+	
+	<script type="application/javascript">
+      
+	  // Showing a message to the User if not using Google Chrome !
+	  if (  ! (/Chrome/.test(window.navigator.userAgent ))){ 
+	    
+	      //window.location.href = '/ie.html';
+	      // Setting the GUI with the value returned from the Web API
+	     document.getElementById("nocrome").innerHTML = "<br /><b>Please try the Google Chrome Browser when using this React App !</b>";
+	     }
+		 
+	</script>
+
+</body>
+</html>
