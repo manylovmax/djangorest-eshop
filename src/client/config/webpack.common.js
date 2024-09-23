@@ -11,7 +11,7 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 module.exports = {
 	
   // Where webpack looks to start building the bundle and include polyfill
-  entry: [ 'whatwg-fetch', paths.src + '/index.js'],
+  entry: [paths.src + '/index.js'],
 
   // Where webpack outputs the assets and bundles
   output: {
@@ -24,9 +24,9 @@ module.exports = {
   resolve: {
         extensions: ['.js', '.jsx'],
         alias: {
-            'components': pathtoresolve.resolve(__dirname, '../src/components/'),
-			'images': pathtoresolve.resolve(__dirname, '../src/images/'),
-		    'styles': pathtoresolve.resolve(__dirname, '../src/styles/'),
+          'components': pathtoresolve.resolve(__dirname, '../src/components/'),
+			    'images': pathtoresolve.resolve(__dirname, '../src/images/'),
+		      'styles': pathtoresolve.resolve(__dirname, '../src/styles/'),
 		 }
     },
 	
@@ -67,28 +67,26 @@ module.exports = {
   // Determine how modules within the project are treated
   module: {
     rules: [
-      // JavaScript: Use Babel to transpile JavaScript files
-      {
-		  test: /\.js$/, 
-		  exclude: /node_modules/, 
-		  use: ['babel-loader']},
-	  
+      // JavaScript: Use Babel to transpile JavaScript files	  
 	   {
         test: /\.(js|jsx)$/,
         exclude: /node_modules/,
         use: {
-          loader: "babel-loader"
+          loader: 'babel-loader',
+          options: {
+            presets: ['@babel/preset-env']
+          }
         }
       },
 
       // Styles: Inject CSS into the head with source maps
       {
-        test: /\.(scss|css)$/,
+        test: /\.(sa|sc|c)ss$/,
         use: [
           'style-loader',
           {loader: 'css-loader', options: {sourceMap: true, importLoaders: 1}},
           {loader: 'postcss-loader', options: {sourceMap: true}},
-          {loader: 'sass-loader', options: {sourceMap: true}},
+          {loader: 'sass-loader', options: {sourceMap: true, implementation: require('sass')}},
         ],
       },
 

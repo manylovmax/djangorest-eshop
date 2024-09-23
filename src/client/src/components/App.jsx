@@ -1,19 +1,25 @@
-//import 'whatwg-fetch';
-//import '@babel/polyfill';
-//import 'regenerator-runtime/runtime';
-
 import React from "react";
+import {
+   createBrowserRouter,
+   RouterProvider,
+ } from "react-router-dom";
+ import HomePage from "./pages/HomePage"
+ import ProductDetailPage from "./pages/ProductDetailPage";
 
 
-class App extends React.Component { 
+ const router = createBrowserRouter([
+   {
+     path: "/",
+     element: <HomePage />,
+   },
+   {
+     path: "/products/:productId",
+     element: <ProductDetailPage />,
+    //  loader: productLoader
+   },
+ ]);
 
-   render() {
-	   
-      return (
-         <div>		
-         </div>
-      );
-   }
+
+export default function App() { 
+   return (<RouterProvider router={router} />);
 }
-
-export default App;

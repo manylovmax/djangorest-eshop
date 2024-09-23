@@ -1,11 +1,7 @@
-// import 'core-js/stable';
-// import 'regenerator-runtime/runtime';
-
 import React from "react";
-import { BrowserRouter } from "react-router-dom";
 
 // Note: Using an Alias in Webpack
-import App from 'components/App.jsx';
+import App from 'components/App';
 
 import 'bootstrap'; // Import Bootstrap’s JavaScript
 import 'popper.js'; // Import Bootstrap’s dependencies
@@ -15,7 +11,7 @@ import './static/scss/main.scss';
 import { createRoot } from 'react-dom/client';
 const domNode = document.getElementById('root');
 const root = createRoot(domNode);
-root.render(<BrowserRouter><App /></BrowserRouter>);
+root.render(<App />);
 
 
 // Note: Before npm run build the statement module.hot.accept(); could / should to be disabled / comment out !!!
