@@ -2,10 +2,9 @@ from rest_framework.viewsets import ModelViewSet
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 
-from .models import Product, ProductCategory, AttributeCategory, AttributeName, AttributeValue
+from .models import Product, ProductCategory, AttributeCategory, AttributeName, AttributeValue, \
+fetch_attribute_values_w_attribute_names_and_attribute_category_by_product_id
 from .serializers import ProductSerializer, ProductCategorySerializer, AttributeCategorySerializer, AttributeNameSerializer, AttributeValueSerializer
-
-from django.db import connection
 
 
 class ProductModelViewSet(ModelViewSet):
@@ -51,27 +50,9 @@ def get_attribute_names_for_attribute_category(request, id):
     models_serializer =  AttributeNameSerializer(models, many=True)
     return Response(data=models_serializer.data)
 
-def dictfetchall(cursor):
-    """
-    Return all rows from a cursor as a dict.
-    Assume the column names are unique.
-    """
-    columns = [col[0] for col in cursor.description]
-    return [dict(zip(columns, row)) for row in cursor.fetchall()]
-
 
 @api_view(['GET'])
 def get_attribute_values_for_product(request, id):
-    with connection.cursor() as cursor:
-        cursor.execute(
-            "SELECT products_attributevalue.value as value, products_attributename.title as attribute, products_attributecategory.title as attribute_category "\
-            "FROM products_attributevalue "\
-            "INNER JOIN products_attributename "\
-            "ON products_attributevalue.attribute_name_id = products_attributename.id "\
-            "INNER JOIN products_attributecategory "\
-            "ON products_attributecategory.id = products_attributename.attribute_category_id " \
-            f"WHERE products_attributevalue.product_id = {id} "
-            )
-        rows = dictfetchall(cursor)
+    rows =  fetch_attribute_values_w_attribute_names_and_attribute_category_by_product_id(id)
     return Response(data=rows)
 

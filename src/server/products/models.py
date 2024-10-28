@@ -1,7 +1,7 @@
 import os
 import uuid
 
-from django.db import models
+from django.db import models, connection
 from django.dispatch import receiver
 
 # PRODUCT_CATEGORIES = (
@@ -109,3 +109,24 @@ def auto_delete_product_image_on_change(sender, instance, **kwargs):
     if not old_file == new_file:
         if os.path.isfile(old_file.path):
             os.remove(old_file.path)
+
+def dictfetchall(cursor):
+    """
+    Return all rows from a cursor as a dict.
+    Assume the column names are unique.
+    """
+    columns = [col[0] for col in cursor.description]
+    return [dict(zip(columns, row)) for row in cursor.fetchall()]
+
+def fetch_attribute_values_w_attribute_names_and_attribute_category_by_product_id(id):
+    with connection.cursor() as cursor:
+        cursor.execute(
+            "SELECT products_attributevalue.value as value, products_attributename.title as attribute, products_attributecategory.title as attribute_category "\
+            "FROM products_attributevalue "\
+            "INNER JOIN products_attributename "\
+            "ON products_attributevalue.attribute_name_id = products_attributename.id "\
+            "INNER JOIN products_attributecategory "\
+            "ON products_attributecategory.id = products_attributename.attribute_category_id " \
+            f"WHERE products_attributevalue.product_id = {id} "
+            )
+        return dictfetchall(cursor)
