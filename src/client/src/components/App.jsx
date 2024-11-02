@@ -6,10 +6,11 @@ import {
 import HomePage from "./pages/HomePage"
 import ProductDetailPage from "./pages/ProductDetailPage";
 // Admin pages just for test here
-import AdminCreateCategoryPage from "./pages/AdminCreateCategoryPage";
-import AdminUpdateCategoryPage from "./pages/AdminUpdateCategoryPage";
-import AdminCategoriesPage from "./pages/AdminCategoriesPage";
-import AdminCreateProductPage from "./pages/AdminCreateProductPage";
+import AdminCreateCategoryPage from "./admin_pages/AdminCreateCategoryPage";
+import AdminUpdateCategoryPage from "./admin_pages/AdminUpdateCategoryPage";
+import AdminCategoriesPage from "./admin_pages/AdminCategoriesPage";
+import AdminCreateProductPage from "./admin_pages/AdminCreateProductPage";
+import AdminRoot from "./admin_pages/AdminRoot";
 
 
  const router = createBrowserRouter([
@@ -24,20 +25,26 @@ import AdminCreateProductPage from "./pages/AdminCreateProductPage";
    },
    // Admin pages just for test here
    {
-     path: "/admin/categories/",
-     element: <AdminCategoriesPage />,
-   },
-   {
-     path: "/admin/categories/create",
-     element: <AdminCreateCategoryPage />,
-   },
-   {
-     path: "/admin/categories/update/:categoryId",
-     element: <AdminUpdateCategoryPage />,
-   },
-   {
-     path: "/admin/products/create",
-     element: <AdminCreateProductPage />,
+    path: "/admin/",
+    element: <AdminRoot />,
+    children: [
+      {
+        path: "/admin/categories/",
+        element: <AdminCategoriesPage />,
+      },
+      {
+        path: "/admin/categories/create",
+        element: <AdminCreateCategoryPage />,
+      },
+      {
+        path: "/admin/categories/update/:categoryId",
+        element: <AdminUpdateCategoryPage />,
+      },
+      {
+        path: "/admin/products/create",
+        element: <AdminCreateProductPage />,
+      },
+    ]
    },
  ]);
 
