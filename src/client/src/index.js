@@ -9,9 +9,7 @@ import 'jquery'; // Import Bootstrap’s dependencies
 import './static/scss/main.scss';
 
 import { createRoot } from 'react-dom/client';
-const domNode = document.getElementById('root');
-const root = createRoot(domNode);
-root.render(<App />);
+createRoot(document.getElementById('root')).render(<App />);
 
 
 // Note: Before npm run build the statement module.hot.accept(); could / should to be disabled / comment out !!!

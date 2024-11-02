@@ -2,25 +2,19 @@ import React from "react";
 
 
 export default function ProductDescription(props) {
-
-    const product = {
-        // https://www.ozon.ru/product/xiaomi-smartfon-redmi-note-13-8-256-gb-chernyy-1405138161/?from_sku=1405138161&oos_search=false
-        title : "Xiaomi Смартфон Redmi Note 13 8/256 ГБ, черный",
-        description: "Xiaomi Смартфон Redmi Note 13 8/256 ГБ, черный"
-    }
     return (
         <>
             <div className="row">
-                Название
+                <h1>{ props.product.title }</h1>
             </div>
             <div className="row">
-                Рейтинг, отзывы, вопросы
+                Рейтинг {props.product.rating} {props.product.reviews_count} отзывов | {props.product.questions_count} вопросов
             </div>
             <div className="row">
-                Бренд
+                Бренд: {props.product.brand}
             </div>
             <div className="row">
-                Цвет
+                Цвет: {props.product.color}
             </div>
             <div className="row">
                 Встроенная память
@@ -29,7 +23,7 @@ export default function ProductDescription(props) {
                 О товаре, ссылка к описанию
             </div>
             <div className="row">
-                Основные теги
+                Основные 5 тегов-характеристик
             </div>
         </>
     );

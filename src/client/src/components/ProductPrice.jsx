@@ -5,7 +5,8 @@ export default function ProductPrice(props) {
 
     return (
         <>
-            Цена, Кнопка добавить в корзину
+            <div className="product-price">{props.price} ₽</div>
+            <div><button onClick={() => props.addToCart()} className="product-cart-btn btn btn-lg btn-primary">Добавить в корзину</button></div>
         </>
     );
 }

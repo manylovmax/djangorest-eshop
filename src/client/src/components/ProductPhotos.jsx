@@ -18,7 +18,7 @@ export default function ProductPhotos(props) {
         <div className="product-photos d-flex flex-row">
             <div className="product-photos__thumbnail-container d-flex flex-column">
                 { photos_urls.map((photo_url, idx) => (
-                    <img onClick={() => setActivePhotoIdx(idx)} className={"product-photos__thumbnail " + ( idx == activePhotoIdx ? "product-photos__thumbnail-active" : "")} src={photo_url} alt="" />
+                    <img key={idx} onClick={() => setActivePhotoIdx(idx)} className={"product-photos__thumbnail " + ( idx == activePhotoIdx ? "product-photos__thumbnail-active" : "")} src={photo_url} alt="" />
                 ))}
             </div>
             <div>

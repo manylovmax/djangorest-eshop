@@ -6,13 +6,13 @@ export default function TopBar() {
    return (
     <div className="top-bar">
         <div className="row">
-            <div className="col-2">
+            <div className="col-md-2">
                 <MenuCategoriesButton />
             </div>
-            <div className="col-6">
+            <div className="col-md-6">
                 <SearchBar/>
             </div>
-            <div className="col-4">
+            <div className="col-md-4">
                 Войти, Заказы, Избранное, Корзина 
             </div>
         </div>
