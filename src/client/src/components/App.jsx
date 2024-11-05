@@ -10,6 +10,7 @@ import AdminCreateCategoryPage from "./admin_pages/AdminCreateCategoryPage";
 import AdminUpdateCategoryPage from "./admin_pages/AdminUpdateCategoryPage";
 import AdminCategoriesPage from "./admin_pages/AdminCategoriesPage";
 import AdminCreateProductPage from "./admin_pages/AdminCreateProductPage";
+import AdminProductsPage from "./admin_pages/AdminProductsPage";
 import AdminRoot from "./admin_pages/AdminRoot";
 
 
@@ -43,6 +44,10 @@ import AdminRoot from "./admin_pages/AdminRoot";
       {
         path: "/admin/products/create",
         element: <AdminCreateProductPage />,
+      },
+      {
+        path: "/admin/products/",
+        element: <AdminProductsPage />,
       },
     ]
    },

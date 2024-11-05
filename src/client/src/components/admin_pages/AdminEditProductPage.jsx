@@ -12,6 +12,15 @@ export default class AdminCreateProductPage extends React.Component {
     //     {id: 2, title: "Одежда", path: "/2/"},
     // ]
 
+    componentDidMount() {
+        // axios.get('http://0.0.0.0:80/categories').then(response => {
+        //     this.setState({
+        //         ...this.state,
+        //         categories: response.data
+        //     });
+        // });
+        
+    }
 
     setTags(newTags) {
         const newState = {...this.state}
@@ -33,25 +42,22 @@ export default class AdminCreateProductPage extends React.Component {
         this.setTags(newTags);
     }
 
-
-
-    // const [images, setImages] = useState([{src: ""}]);
     setImages(newImages) {
         const newState = {...this.state}
         newState.images = newImages
         this.setState(newState)
     }
     addEmptyImage() {
-        this.setImages([...images, {src: "", file: null}]);
+        this.setImages([...this.state.images, {src: "", file: null}]);
     }
     deleteImage(idx) {
-        let newImages = [...images];
+        let newImages = [...this.state.images];
         newImages.splice(idx, 1)
         this.setImages(newImages)
     }
 
     changeImage(idx, file) {
-        let newImages = [...images];
+        let newImages = [...this.state.images];
         newImages[idx].src = URL.createObjectURL(file);
         newImages[idx].file = file;
         this.setImages(newImages);
@@ -125,7 +131,7 @@ export default class AdminCreateProductPage extends React.Component {
                             </div>
                         </div>
                         ))}
-                        <div onClick={this.addEmptyImage} className="btn btn-success mb-3">Добавить изображение</div>
+                        <div onClick={() => this.addEmptyImage()} className="btn btn-success mb-3">Добавить изображение</div>
                     </div>
 
                     <div>
