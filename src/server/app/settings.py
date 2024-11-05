@@ -25,7 +25,7 @@ SECRET_KEY = 'django-insecure-5st-h(e+-rux3mwhc+-j2ypg6!#s9)4kd5r$y24dl25+52ct1@
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['127.0.0.1']
+ALLOWED_HOSTS = ['127.0.0.1', 'localhost']
 INTERNAL_IPS = ['127.0.0.1']
 
 
@@ -39,10 +39,17 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'rest_framework',
+    'rest_framework_simplejwt',
     'debug_toolbar',
     'products',
     # 'users',
 ]
+
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        'rest_framework_simplejwt.authentication.JWTAuthentication',
+    )
+}
 
 MIDDLEWARE = [
     'debug_toolbar.middleware.DebugToolbarMiddleware',
