@@ -1,4 +1,6 @@
 import React, { useState } from "react";
+import axios from "axios";
+
 import { useAuth } from "../hooks/useAuth";
 
 export default function LoginPage() {
@@ -7,11 +9,11 @@ export default function LoginPage() {
   const { login } = useAuth();
   const handleLogin = async (e) => {
     e.preventDefault();
-    // Here you would usually send a request to your backend to authenticate the user
-    // For the sake of this example, we're using a mock authentication
-    if (username === "user" && password === "password") {
+    const {data} = await axios.post('http://127.0.0.1:8000/api/token/', {username, password});
+    const token = data.access;
+    if (token) {
       // Replace with actual authentication logic
-      await login({ username });
+      await login({ username, token });
     } else {
       alert("Invalid username or password");
     }
