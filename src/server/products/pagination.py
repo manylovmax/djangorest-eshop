@@ -7,8 +7,8 @@ class CustomPagination(PageNumberPagination):
             'count': self.page.paginator.count,
             # 'page': self.get_page_number(),
             'pages': self.page.paginator.num_pages,
-            'page_number': self.page.number,
-            'has_previous': self.page.has_previous(),
-            'has_next': self.page.has_next(),
+            'pageNumber': self.page.number,
+            'hasPrevious': self.page.has_previous(),
+            'hasNext': self.page.has_next(),
             'results': data
         })
