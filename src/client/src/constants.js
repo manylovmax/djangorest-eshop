@@ -1,6 +1,5 @@
 const constants = {
-    MAX_SUGGESTIONS: 6,
-    ACTION_CHANGE_ACTIVE_SUGGESTION: 'ACTION_CHANGE_ACTIVE_SUGGESTION'
+    SERVER_ADDRESS: "http://localhost:8000"
   };
   
   export default constants;

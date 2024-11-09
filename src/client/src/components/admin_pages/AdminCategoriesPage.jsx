@@ -3,6 +3,7 @@ import axios from "axios";
 import {Link} from "react-router-dom";
 
 import Paginator from "../admin_components/Paginatior";
+import constants from "../../constants";
 
 
 export default class AdminCategoriesPage extends React.Component {
@@ -19,7 +20,7 @@ export default class AdminCategoriesPage extends React.Component {
     }
 
     getPage(pageNumber) {
-        axios.get('http://localhost:8000/products/product-category?page=' + pageNumber).then(response => {
+        axios.get(constants.SERVER_ADDRESS + "/products/product-category?page=" + pageNumber).then(response => {
             this.setState({
                 categories: response.data?.results,
                 pageNumber: response.data?.pageNumber,
