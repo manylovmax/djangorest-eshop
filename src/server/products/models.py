@@ -38,7 +38,7 @@ def auto_set_category_path_on_change(sender, instance, **kwargs):
     else:
         instance_path = instance.parent.path + f"{instance.id}/"
     
-    instance.update(path=instance_path)
+    ProductCategory.objects.filter(pk=instance.pk).update(path=instance_path)
 
 
 class Product(models.Model):
