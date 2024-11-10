@@ -54,7 +54,7 @@ REST_FRAMEWORK = {
         'rest_framework_simplejwt.authentication.JWTAuthentication',
     ),
     'DEFAULT_PAGINATION_CLASS': 'products.pagination.CustomPagination',
-    'PAGE_SIZE': 2
+    'PAGE_SIZE': 10
 }
 
 MIDDLEWARE = [
