@@ -39,6 +39,12 @@ def get_asignable_categories(request):
     return Response(data=categories_serializer.data)
 
 @api_view(['GET'])
+def get_all_categories(request):
+    categories = ProductCategory.objects.all()
+    categories_serializer =  ProductCategorySerializer(categories, many=True)
+    return Response(data=categories_serializer.data)
+
+@api_view(['GET'])
 def get_attribute_categories_for_product_category(request, id):
     categories = AttributeCategory.objects.filter(category__id=id).all()
     categories_serializer =  AttributeCategorySerializer(categories, many=True)
