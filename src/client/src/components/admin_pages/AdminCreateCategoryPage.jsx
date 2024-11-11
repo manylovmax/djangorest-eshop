@@ -31,9 +31,13 @@ export default function AdminCreateCategoryPage () {
         });
     }
 
+
     function setParentCategoryHandler(id) {
-        setParentCategoryId(id);
-        const category = categories.filter(category => category.id == id)[0];
+        const idNumber = Number(id);
+        setParentCategoryId(idNumber);
+        let category = null;
+        if (idNumber)
+            category = categories.filter(category => category.id == idNumber)[0];
         setParentCategory(category);
     }
 
