@@ -47,7 +47,7 @@ export default class AdminCategoriesPage extends React.Component {
                 <table className="table">
                     <thead>
                         <tr>
-                            <th scope="col">#</th>
+                            <th scope="col">ID</th>
                             <th scope="col">Название</th>
                             <th scope="col">Путь</th>
                             <th scope="col">Назначаемая</th>
