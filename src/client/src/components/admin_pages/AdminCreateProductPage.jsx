@@ -15,6 +15,8 @@ export default function AdminCreateProductPage () {
     const [productDescription, setProductDescription] = useState("");
     const [productPrice, setProductPrice] = useState(0);
     const [formErrors, setFormErrors] = useState([]);
+    const [attributeCategoriesWithAttributes, setAttributeCategoriesWithAttributes] = useState([]);
+    const [attributeValues, setAttributeValues] = useState([]);
     
 
     useEffect(() => {
@@ -22,8 +24,36 @@ export default function AdminCreateProductPage () {
             setCategories(response.data);
             setSelectedCategory(response.data[0]);
             setSelectedCategoryId(response.data[0]?.id);
+            
+            if (response.data.length)
+                axios.get(constants.SERVER_ADDRESS + `/products/attribute-names-for-category/${response.data[0]?.id}/`).then(response => {
+                    setAttributeCategoriesWithAttributes(response.data);
+                    // if (response.data.length) {
+                    //     let newAttrbuteValues = [];
+                    //     for (const category of response.data) {
+                    //         for (const name of category.attributeNames) {
+                    //             newAttrbuteValues.push({attributeNameId: name.attributeNameId, attributeValue: null})
+                    //         }
+                    //     }
+                    //     setAttributeValues(newAttrbuteValues);
+                    // }
+                });
         });
     }, [])
+
+    function setAttributeValue(id, value) {
+        let newAttributeCategoriesWithAttributes = [...attributeCategoriesWithAttributes];
+        loop1: 
+        for (let i = 0; i < newAttributeCategoriesWithAttributes.length; i++) {
+            for (let j = 0; j < newAttributeCategoriesWithAttributes[i].attributeNames.length; j++) {
+                if (newAttributeCategoriesWithAttributes[i]["attributeNames"][j]["attributeNameId"] == id) {
+                    newAttributeCategoriesWithAttributes[i]["attributeNames"][j].attributeValue = value
+                    break loop1;
+                }
+            }
+        }
+        setAttributeCategoriesWithAttributes(newAttributeCategoriesWithAttributes);
+    }
 
     function createProduct() {
         axios.post(constants.SERVER_ADDRESS + "/products/product/", {
@@ -107,6 +137,20 @@ export default function AdminCreateProductPage () {
                     ))}
                 </div>
             </div>
+
+
+            {attributeCategoriesWithAttributes.map((category, key) => (
+                <div className="mb-3 card p-3" key={key}>
+                    <h5>{category.attributeCategoryTitle}</h5>
+                    {category.attributeNames.map((attributeName, idx) => (
+                        <div className="mb-3" key={attributeName.attributeNameId}>
+                            <label htmlFor={"attributeName" + attributeName.attributeNameId} className="form-label">{attributeName.attributeNameTitle}</label>
+                            <input type="text" className="form-control" id={"attributeName" + attributeName.attributeNameId} value={attributeName.hasOwnProperty("attributeValue") ? attributeName.attributeValue: ""} onInput={e => setAttributeValue(attributeName.attributeNameId, e.target.value)}/>
+                        </div>
+                    ))}
+                </div>
+
+            ))}
 
             <div>
                 <button className="btn btn-success"  disabled={ formErrors.length ? true : false} onClick={createProduct}>Зарегистрировать</button>
