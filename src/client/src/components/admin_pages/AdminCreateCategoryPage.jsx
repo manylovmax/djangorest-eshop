@@ -13,6 +13,7 @@ export default function AdminCreateCategoryPage () {
     const [categories, setCategories] = useState([]);
     const [categoryTitle, setCategoryTitle] = useState("");
     const [categoryAssignable, setCategoryAssignable] = useState(false);
+    const [formErrors, setFormErrors] = useState([]);
     
 
     useEffect(() => {
@@ -30,6 +31,16 @@ export default function AdminCreateCategoryPage () {
             navigate("/admin/categories");
         });
     }
+
+    function validate() {
+        let newFormErrors = [];
+        if (!categoryTitle.length) {
+            newFormErrors.push({attribute: "categoryTitle", value: "Необходимо ввести значение"})
+        }
+        setFormErrors(newFormErrors);
+    }
+
+    useEffect(() => validate(), [categoryTitle])
 
 
     function setParentCategoryHandler(id) {
@@ -56,7 +67,13 @@ export default function AdminCreateCategoryPage () {
                         <span>ID: {parentCategoryId ? parentCategoryId : ""} </span><span>Путь: {parentCategory ? parentCategory.path : ""}</span></div>
                     <div className="mb-3">
                         <label htmlFor="category-name">Название категории:</label>
-                        <input className="form-control" onInput={(e) => setCategoryTitle(e.target.value)} id="category-name" name="category-name" type="text" value={categoryTitle}/>
+                        <input className={"form-control " + (formErrors.filter(item => item.attribute == "categoryTitle").length ? "is-invalid" : "is-valid") }
+                               onInput={(e) => setCategoryTitle(e.target.value)} id="category-name" name="category-name" type="text" value={categoryTitle}/>
+                       <div class="invalid-feedback">
+                         {formErrors.filter(item => item.attribute == "categoryTitle").map((item, key) => (
+                           <div key={key}>{item.value}</div>
+                         ))}
+                       </div>
                     </div>
                     <div className="mb-3">
                       <div className="form-check">
@@ -65,7 +82,7 @@ export default function AdminCreateCategoryPage () {
                         <label className="form-check-label" htmlFor="assignable">Назначаемая</label>
                       </div>
                     </div>
-                    <button className="btn btn-primary" onClick={createCategory}>Создать</button>
+                    <button className="btn btn-primary" disabled={ formErrors.length ? true : false} onClick={createCategory}>Создать</button>
                 </div>
             </div>
         </div>
