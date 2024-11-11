@@ -50,13 +50,13 @@ export default function AdminCreateProductPage () {
 
     function validate() {
         let newFormErrors = [];
-        if (!productTitle.length) {
+        if (!productTitle) {
             newFormErrors.push({attribute: "productTitle", value: "Необходимо ввести значение"})
         }
-        if (!productDescription.length) {
+        if (!productDescription) {
             newFormErrors.push({attribute: "productDescription", value: "Необходимо ввести значение"})
         }
-        if (!productPrice.length) {
+        if (!productPrice) {
             newFormErrors.push({attribute: "productPrice", value: "Необходимо ввести значение"})
         }
         setFormErrors(newFormErrors);
