@@ -5,7 +5,7 @@ import axios from "axios";
 import constants from "../../constants";
 
 
-export default function AdminCreateCategoryPage () {
+export default function AdminCreateProductPage () {
     const navigate = useNavigate();
 
     const [selectedCategoryId, setSelectedCategoryId] = useState("");
