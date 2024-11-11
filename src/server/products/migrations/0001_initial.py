@@ -27,7 +27,7 @@ class Migration(migrations.Migration):
                 ('title', models.CharField(max_length=255, verbose_name='Название')),
                 ('description', models.TextField(verbose_name='Описание')),
                 ('price', models.FloatField(verbose_name='Цена')),
-                ('published_at', models.DateTimeField(verbose_name='Опубликовано')),
+                ('published_at', models.DateTimeField(verbose_name='Опубликовано', null=True)),
                 ('created_at', models.DateTimeField(auto_now_add=True, verbose_name='Создано')),
                 ('updated_at', models.DateTimeField(auto_now=True, verbose_name='Обновлено')),
             ],
