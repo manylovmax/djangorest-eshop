@@ -130,3 +130,26 @@ def fetch_attribute_values_w_attribute_names_and_attribute_category_by_product_i
             f"WHERE products_attributevalue.product_id = {id} "
             )
         return dictfetchall(cursor)
+    
+def fetch_attributes_and_attribute_categories_by_category_id(id):
+    with connection.cursor() as cursor:
+        cursor.execute(
+            "SELECT products_attributename.id as attributeNameId, products_attributename.title as attributeNameTitle, products_attributecategory.title as attributeCategoryTitle, products_attributecategory.id as attributeCategoryId "\
+            "FROM products_attributename "\
+            "INNER JOIN products_attributecategory "\
+            "ON products_attributecategory.id = products_attributename.attribute_category_id " \
+            f"WHERE products_attributecategory.category_id = {id} "
+            )
+        rows = dictfetchall(cursor)
+        result_dict = {}
+        for row in rows:
+            attr_name_dict = {
+                'attributeNameId': row['attributeNameId'],
+                'attributeNameTitle': row['attributeNameTitle']
+            }
+            if row['attributeCategoryTitle'] in result_dict.keys():
+                result_dict[row['attributeCategoryTitle']].append(attr_name_dict)
+            else:
+                result_dict[row['attributeCategoryTitle']] = [attr_name_dict]
+
+        return result_dict

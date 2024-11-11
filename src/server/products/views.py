@@ -3,7 +3,7 @@ from rest_framework.decorators import api_view
 from rest_framework.response import Response
 
 from .models import Product, ProductCategory, AttributeCategory, AttributeName, AttributeValue, \
-fetch_attribute_values_w_attribute_names_and_attribute_category_by_product_id
+fetch_attribute_values_w_attribute_names_and_attribute_category_by_product_id, fetch_attributes_and_attribute_categories_by_category_id
 from .serializers import ProductSerializer, ProductCategorySerializer, AttributeCategorySerializer, AttributeNameSerializer, AttributeValueSerializer
 
 
@@ -60,5 +60,11 @@ def get_attribute_names_for_attribute_category(request, id):
 @api_view(['GET'])
 def get_attribute_values_for_product(request, id):
     rows =  fetch_attribute_values_w_attribute_names_and_attribute_category_by_product_id(id)
+    return Response(data=rows)
+
+
+@api_view(['GET'])
+def get_attributes_and_attribute_categories_for_category(request, id):
+    rows =  fetch_attributes_and_attribute_categories_by_category_id(id)
     return Response(data=rows)
 
