@@ -20,7 +20,7 @@ export default class AdminCategoriesPage extends React.Component {
     }
 
     getPage(pageNumber) {
-        axios.get(constants.SERVER_ADDRESS + "/products/product-category?page=" + pageNumber).then(response => {
+        axios.get(constants.SERVER_ADDRESS + "/products/product-category/?page=" + pageNumber).then(response => {
             this.setState({
                 categories: response.data?.results,
                 pageNumber: response.data?.pageNumber,
@@ -29,6 +29,14 @@ export default class AdminCategoriesPage extends React.Component {
                 pages: response.data?.pages
             });
         });
+    }
+
+    handleDelete(categoryId, categoryTitle) {
+        const answer = confirm("Удалить категорию \"" + categoryTitle + "\"?");
+        if (answer) {
+            axios.delete(`${constants.SERVER_ADDRESS}/products/product-category/${categoryId}/`)
+            .then(() => this.getPage(1));
+        }
     }
 
     render() {
@@ -53,7 +61,7 @@ export default class AdminCategoriesPage extends React.Component {
                             <td>{category.title}</td>
                             <td>{category.path}</td>
                             <td>{category.assignable ? "да" : "нет" }</td>
-                            <td><a href={"/admin/categories/update/" + category.id} className="btn btn-primary">Редактировать</a><div className="btn btn-danger">Удалить</div></td>
+                            <td><a href={"/admin/categories/update/" + category.id} className="btn btn-primary">Редактировать</a><div className="btn btn-danger" onClick={() => this.handleDelete(category.id, category.title)}>Удалить</div></td>
                         </tr>
                     ))}
                     </tbody>
