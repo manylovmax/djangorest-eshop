@@ -25,9 +25,9 @@ from django.dispatch import receiver
 # )
 
 class ProductCategory(models.Model):
-    title = models.CharField("Название", max_length=255, null=False, blank=False)
+    title = models.CharField("Название", max_length=255)
     path = models.CharField("Путь", max_length=255, editable=False)
-    assignable = models.BooleanField("Назначаемое", default=False, null=False, blank=False)
+    assignable = models.BooleanField("Назначаемое", default=False)
     
     parent = models.ForeignKey("self", null=True, on_delete=models.SET_NULL)
 
@@ -42,11 +42,11 @@ def auto_set_category_path_on_change(sender, instance, **kwargs):
 
 
 class Product(models.Model):
-    title = models.CharField("Название", max_length=255, null=False, blank=False)
-    description = models.TextField("Описание", null=False, blank=False)
-    price = models.FloatField("Цена", null=False, blank=False)
+    title = models.CharField("Название", max_length=255)
+    description = models.TextField("Описание")
+    price = models.FloatField("Цена")
 
-    published_at = models.DateTimeField("Опубликовано")
+    published_at = models.DateTimeField("Опубликовано", null=True)
     created_at = models.DateTimeField("Создано", auto_now_add=True)
     updated_at = models.DateTimeField("Обновлено", auto_now=True)
 
@@ -55,17 +55,17 @@ class Product(models.Model):
 
 class AttributeCategory(models.Model):
     category = models.ForeignKey(ProductCategory, null=True, on_delete=models.SET_NULL)
-    title = models.CharField("Название", max_length=255, null=False, blank=False)
+    title = models.CharField("Название", max_length=255)
 
 
 class AttributeName(models.Model):
     attribute_category = models.ForeignKey(AttributeCategory, null=True, on_delete=models.SET_NULL)
-    title = models.CharField("Название", max_length=255, null=False, blank=False)
+    title = models.CharField("Название", max_length=255)
 
 class AttributeValue(models.Model):
-    product = models.ForeignKey(Product, on_delete=models.CASCADE, null=False, blank=False)
+    product = models.ForeignKey(Product, on_delete=models.CASCADE)
     attribute_name = models.ForeignKey(AttributeName, null=True, on_delete=models.SET_NULL)
-    value = models.CharField("Значение", max_length=255, null=False, blank=False)
+    value = models.CharField("Значение", max_length=255)
 
 
 class ProductImage(models.Model):
