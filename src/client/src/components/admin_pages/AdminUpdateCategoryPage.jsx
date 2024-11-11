@@ -12,7 +12,6 @@ export default function AdminUpdateCategoryPage () {
     const [parentCategory, setParentCategory] = useState(null);
     const [categories, setCategories] = useState([]);
     const [categoryTitle, setCategoryTitle] = useState("");
-    const [category, setCategory] = useState(null);
     const [categoryAssignable, setCategoryAssignable] = useState(false);
 
     const {categoryId} = useParams();
@@ -22,7 +21,6 @@ export default function AdminUpdateCategoryPage () {
             setCategories(response.data);
         });
         axios.get(`${constants.SERVER_ADDRESS}/products/product-category/${categoryId}/`).then(response => {
-            setCategory(response.data);
             setCategoryAssignable(response.data?.assignable);
             setCategoryTitle(response.data?.title);
             if (response.data.parent) {
