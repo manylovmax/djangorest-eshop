@@ -5,7 +5,7 @@ import axios from "axios";
 import constants from "../../constants";
 
 
-export default function AdminCreateProductPage () {
+export default function AdminUpdateProductPage () {
     const navigate = useNavigate();
     const {productId} = useParams();
 
