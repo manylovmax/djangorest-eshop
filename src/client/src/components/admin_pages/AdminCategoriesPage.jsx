@@ -31,10 +31,10 @@ export default class AdminCategoriesPage extends React.Component {
         });
     }
 
-    handleDelete(categoryId, categoryTitle) {
-        const answer = confirm("Удалить категорию \"" + categoryTitle + "\"?");
+    handleDelete(id, title) {
+        const answer = confirm("Удалить \"" + title + "\"?");
         if (answer) {
-            axios.delete(`${constants.SERVER_ADDRESS}/products/product-category/${categoryId}/`)
+            axios.delete(`${constants.SERVER_ADDRESS}/products/product-category/${id}/`)
             .then(() => this.getPage(1));
         }
     }
