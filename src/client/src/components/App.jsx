@@ -5,14 +5,14 @@ import HomePage from "./pages/HomePage"
 import LoginPage from "./pages/LoginPage"
 import ProductDetailPage from "./pages/ProductDetailPage";
 // Admin pages
+import AuthProvider from "./hooks/useAuth";
+import RequireAuth from "./RequireAuth";
 import AdminCreateCategoryPage from "./admin_pages/AdminCreateCategoryPage";
 import AdminUpdateCategoryPage from "./admin_pages/AdminUpdateCategoryPage";
 import AdminCategoriesPage from "./admin_pages/AdminCategoriesPage";
 import AdminCreateProductPage from "./admin_pages/AdminCreateProductPage";
 import AdminProductsPage from "./admin_pages/AdminProductsPage";
 import AdminRoot from "./admin_pages/AdminRoot";
-import AuthProvider from "./hooks/useAuth";
-import RequireAuth from "./RequireAuth";
 
 
 export default function App() { 
