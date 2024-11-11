@@ -41,8 +41,13 @@ export default function AdminCreateCategoryPage () {
     }
 
     function setParentCategoryHandler(id) {
-        setParentCategoryId(id);
-        const category = categories.filter(category => category.id == id)[0];
+        const idNumber = Number(id);
+        setParentCategoryId(idNumber);
+        if (idNumber) {
+            const category = categories.filter(category => category.id == idNumber)[0];
+        } else {
+            const category = null;
+        }
         setParentCategory(category);
     }
 
