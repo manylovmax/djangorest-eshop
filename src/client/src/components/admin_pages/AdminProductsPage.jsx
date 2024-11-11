@@ -1,17 +1,45 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
+import axios from "axios";
+
+import Paginator from "../admin_components/Paginatior";
+
+import constants from "../../constants";
 
 
 export default function AdminProductsPage() {
-    const products = [
-        {id: 1, title: "Xiaomi Смартфон Redmi Note 13 8/256 ГБ, черный", description: "Достаточно тонкий, 7.97 мм толщиной, смартфон весит 188.5 г. Он удобно лежит в ладони, не скользит, функциями комфортно управлять одной рукой. Плоская рамка со скругленными углами вокруг и глубокий цвет задней крышки придают Xiaomi Redmi Note 13 премиальный внешний вид."},
-        {id: 2, title: "Электроника", description: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Molestiae quae doloribus error assumenda quam dignissimos esse rem eius voluptate nulla, minima, temporibus dolor quo, deleniti eos magnam iste accusamus sed!"},
-    ]
+    const [products, setProducts] = useState([]);
+    const [pageNumber, setPageNumber] = useState(1);
+    const [pages, setPages] = useState(1);
+    const [hasNextPage, setHasNextPage] = useState(false); 
+    const [hasPreviousPage, setHasPreviousPage] = useState(false); 
+
+    useEffect(() => {
+        getPage(pageNumber);
+    }, []);
+
+    function getPage(number) {
+        axios.get(`${constants.SERVER_ADDRESS}/products/product/?page=${number}`).then(response => {
+            setPageNumber(number);
+            setProducts(response.data?.results);
+            setHasNextPage(response.data?.hasNext);
+            setHasPreviousPage(response.data?.hasPrevious);
+            setPages(response.data?.pages);
+        });
+    }
+
+    function handleDelete(id, title) {
+        const answer = confirm("Удалить \"" + title + "\"?");
+        if (answer) {
+            axios.delete(`${constants.SERVER_ADDRESS}/products/product/${id}/`)
+            .then(() => getPage(1));
+        }
+    }
 
     return (
         <>
             <h1>Продукты</h1>
             <a href="/admin/products/create" className="btn btn-success">Создать</a>
-            <table class="table">
+            <table className="table">
                 <thead>
                     <tr>
                         <th scope="col">ID</th>
@@ -22,15 +50,19 @@ export default function AdminProductsPage() {
                 </thead>
                 <tbody>
                 { products.map((product, idx) => (
-                    <tr>
-                    <th scope="row">{product.id}</th>
-                    <td>{product.title}</td>
-                    <td>{product.description}</td>
-                    <td><a href={"/admin/products/update/" + product.id} className="btn btn-primary">Редактировать</a><div className="btn btn-danger">Удалить</div></td>
+                    <tr key={idx}>
+                        <th scope="row">{product.id}</th>
+                        <td>{product.title}</td>
+                        <td>{product.description}</td>
+                        <td>
+                            <a href={"/admin/products/update/" + product.id} className="btn btn-primary">Редактировать</a>
+                            <span className="btn btn-danger" onClick={() => handleDelete(product.id, product.title)}>Удалить</span>
+                        </td>
                     </tr>
                 ))}
                 </tbody>
             </table>
+            <Paginator pageNumber={pageNumber} totalPages={pages} hasNextPage={hasNextPage} hasPreviousPage={hasPreviousPage} onChangePage={(pageNumber) => getPage(pageNumber)}/>
         </>
     );
 }
