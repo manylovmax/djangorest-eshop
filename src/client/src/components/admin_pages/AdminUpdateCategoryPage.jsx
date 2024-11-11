@@ -5,7 +5,7 @@ import axios from "axios";
 import constants from "../../constants";
 
 
-export default function AdminCreateCategoryPage () {
+export default function AdminUpdateCategoryPage () {
     const navigate = useNavigate();
 
     const [parentCategoryId, setParentCategoryId] = useState("");
@@ -43,11 +43,9 @@ export default function AdminCreateCategoryPage () {
     function setParentCategoryHandler(id) {
         const idNumber = Number(id);
         setParentCategoryId(idNumber);
-        if (idNumber) {
-            const category = categories.filter(category => category.id == idNumber)[0];
-        } else {
-            const category = null;
-        }
+        let category = null;
+        if (idNumber)
+            category = categories.filter(category => category.id == idNumber)[0];
         setParentCategory(category);
     }
 
