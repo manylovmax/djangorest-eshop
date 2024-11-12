@@ -69,7 +69,7 @@ export default function AdminCreateCategoryPage () {
                         <label htmlFor="category-name">Название категории:</label>
                         <input className={"form-control " + (formErrors.filter(item => item.attribute == "categoryTitle").length ? "is-invalid" : "is-valid") }
                                onInput={(e) => setCategoryTitle(e.target.value)} id="category-name" name="category-name" type="text" value={categoryTitle}/>
-                       <div class="invalid-feedback">
+                       <div className="invalid-feedback">
                          {formErrors.filter(item => item.attribute == "categoryTitle").map((item, key) => (
                            <div key={key}>{item.value}</div>
                          ))}
