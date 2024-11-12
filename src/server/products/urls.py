@@ -3,7 +3,7 @@ from rest_framework import routers
 
 from  .views import ProductModelViewSet, ProductCategoryModelViewSet, AttributeCategoryModelViewSet, AttributeNameModelViewSet, AttributeValueModelViewSet, get_asignable_categories, \
     get_attribute_categories_for_product_category, get_attribute_names_for_attribute_category, get_attribute_values_for_product, \
-    get_all_categories, get_attributes_and_attribute_categories_for_category
+    get_all_categories, get_attributes_and_attribute_categories_for_category, create_attribute_values_for_product
 
 router = routers.DefaultRouter()
 router.register(r'product', ProductModelViewSet)
@@ -20,4 +20,5 @@ urlpatterns = [
     path('attribute-names-for-attribute-category/<int:id>/', get_attribute_names_for_attribute_category),
     path('attribute-values-for-product/<int:id>/', get_attribute_values_for_product),
     path('attribute-names-for-category/<int:id>/', get_attributes_and_attribute_categories_for_category),
+    path('create-attribute-values-for-product/', create_attribute_values_for_product)
 ]

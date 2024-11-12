@@ -46,6 +46,10 @@ export default function AdminCreateProductPage () {
             category: selectedCategoryId,
             
         }).then(response => {
+            axios.post(constants.SERVER_ADDRESS + "/products/create-attribute-values-for-product/", {
+                productId: response.data?.id,
+                attributeNameIdVsAttributeValue: attributeValues
+            });
             navigate("/admin/products");
         });
     }

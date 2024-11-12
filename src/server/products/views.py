@@ -68,3 +68,15 @@ def get_attributes_and_attribute_categories_for_category(request, id):
     rows =  fetch_attributes_and_attribute_categories_by_category_id(id)
     return Response(data=rows)
 
+
+@api_view(['POST'])
+def create_attribute_values_for_product(request):
+    productId = request.data['productId']
+    attributeNameIdVsAttributeValue = request.data['attributeNameIdVsAttributeValue']
+    insert_objects_array = []
+    for k,v in attributeNameIdVsAttributeValue.items():
+        insert_objects_array.append(AttributeValue(product_id=productId, attribute_name_id=k, value=v))
+    
+    AttributeValue.objects.bulk_create(insert_objects_array)
+    
+    return Response(status=201)
