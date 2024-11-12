@@ -28,15 +28,6 @@ export default function AdminCreateProductPage () {
             if (response.data.length)
                 axios.get(constants.SERVER_ADDRESS + `/products/attribute-names-for-category/${response.data[0]?.id}/`).then(response => {
                     setAttributeCategoriesWithAttributes(response.data);
-                    // if (response.data.length) {
-                    //     let newAttrbuteValues = [];
-                    //     for (const category of response.data) {
-                    //         for (const name of category.attributeNames) {
-                    //             newAttrbuteValues.push({attributeNameId: name.attributeNameId, attributeValue: null})
-                    //         }
-                    //     }
-                    //     setAttributeValues(newAttrbuteValues);
-                    // }
                 });
         });
     }, [])
