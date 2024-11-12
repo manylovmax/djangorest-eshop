@@ -16,7 +16,7 @@ export default function AdminCreateProductPage () {
     const [productPrice, setProductPrice] = useState(0);
     const [formErrors, setFormErrors] = useState([]);
     const [attributeCategoriesWithAttributes, setAttributeCategoriesWithAttributes] = useState([]);
-    const [attributeValues, setAttributeValues] = useState([]);
+    const [attributeValues, setAttributeValues] = useState({});
     
 
     useEffect(() => {
@@ -42,17 +42,9 @@ export default function AdminCreateProductPage () {
     }, [])
 
     function setAttributeValue(id, value) {
-        let newAttributeCategoriesWithAttributes = [...attributeCategoriesWithAttributes];
-        loop1: 
-        for (let i = 0; i < newAttributeCategoriesWithAttributes.length; i++) {
-            for (let j = 0; j < newAttributeCategoriesWithAttributes[i].attributeNames.length; j++) {
-                if (newAttributeCategoriesWithAttributes[i]["attributeNames"][j]["attributeNameId"] == id) {
-                    newAttributeCategoriesWithAttributes[i]["attributeNames"][j].attributeValue = value
-                    break loop1;
-                }
-            }
-        }
-        setAttributeCategoriesWithAttributes(newAttributeCategoriesWithAttributes);
+        let newAttributeValues = {...attributeValues};
+        newAttributeValues[id] = value;
+        setAttributeValues(newAttributeValues);
     }
 
     function createProduct() {
@@ -109,7 +101,7 @@ export default function AdminCreateProductPage () {
                 <label htmlFor="inputTitle" className="form-label">Название</label>
                 <input type="text" className={"form-control " + (formErrors.filter(item => item.attribute == "productTitle").length ? "is-invalid" : "is-valid") }
                  id="inputTitle" value={productTitle} onInput={e => setProductTitle(e.target.value)}/>
-                <div class="invalid-feedback">
+                <div className="invalid-feedback">
                     {formErrors.filter(item => item.attribute == "productTitle").map((item, key) => (
                     <div key={key}>{item.value}</div>
                     ))}
@@ -120,7 +112,7 @@ export default function AdminCreateProductPage () {
                 <label htmlFor="inputPrice" className="form-label">Стоимость</label>
                 <input type="number" className={"form-control " + (formErrors.filter(item => item.attribute == "productPrice").length ? "is-invalid" : "is-valid") }
                  id="inputPrice"  value={productPrice} onInput={e => setProductPrice(e.target.value)}/>
-                <div class="invalid-feedback">
+                <div className="invalid-feedback">
                     {formErrors.filter(item => item.attribute == "productPrice").map((item, key) => (
                     <div key={key}>{item.value}</div>
                     ))}
@@ -131,7 +123,7 @@ export default function AdminCreateProductPage () {
                 <label htmlFor="textareaDescription" className="form-label">Описание</label>
                 <textarea className={"form-control " + (formErrors.filter(item => item.attribute == "productDescription").length ? "is-invalid" : "is-valid") }
                  id="textareaDescription" rows="3" value={productDescription} onInput={e => setProductDescription(e.target.value)}></textarea>
-                <div class="invalid-feedback">
+                <div className="invalid-feedback">
                     {formErrors.filter(item => item.attribute == "productDescription").map((item, key) => (
                     <div key={key}>{item.value}</div>
                     ))}
@@ -145,7 +137,7 @@ export default function AdminCreateProductPage () {
                     {category.attributeNames.map((attributeName, idx) => (
                         <div className="mb-3" key={attributeName.attributeNameId}>
                             <label htmlFor={"attributeName" + attributeName.attributeNameId} className="form-label">{attributeName.attributeNameTitle}</label>
-                            <input type="text" className="form-control" id={"attributeName" + attributeName.attributeNameId} value={attributeName.hasOwnProperty("attributeValue") ? attributeName.attributeValue: ""} onInput={e => setAttributeValue(attributeName.attributeNameId, e.target.value)}/>
+                            <input type="text" className="form-control" id={"attributeName" + attributeName.attributeNameId} value={attributeValues.hasOwnProperty(attributeName.attributeNameId) ? attributeValues[attributeName.attributeNameId]: ""} onInput={e => setAttributeValue(attributeName.attributeNameId, e.target.value)}/>
                         </div>
                     ))}
                 </div>
