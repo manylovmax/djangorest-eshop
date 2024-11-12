@@ -66,38 +66,38 @@ export default function AdminUpdateProductPage () {
             price: productPrice,
             category: selectedCategoryId
         }).then(response => {
-            let attributeValuesToUpdate = {}, attributeValuesToCreate = {};
-            let needCreate = false, needUpdate = false;
-            console.log("attributeCategoriesWithAttributes", attributeCategoriesWithAttributes);
+            let attributeValuesToUpdate = {}, attributeValuesToCreate = {}, attributeValuesToDelete = [];
+            let needCreate = false, needUpdate = false, needDelete = false;
             for(let i = 0; i < attributeCategoriesWithAttributes.length; i++) {
                 for(let j = 0; j < attributeCategoriesWithAttributes[i].attributeNames.length; j++) {
-                    let attributeNameId = attributeCategoriesWithAttributes[i].attributeNames[j].attributeNameId;
-                    if (attributeNameIdVsAttributeValueId.hasOwnProperty(attributeNameId) && attributeValues[attributeNameId] != oldAttributeValues[attributeNameId]) {
-                        // assemble attribute values to update
+                    const attributeNameId = attributeCategoriesWithAttributes[i].attributeNames[j].attributeNameId;
+                    if (attributeNameIdVsAttributeValueId.hasOwnProperty(attributeNameId) && attributeValues[attributeNameId] != oldAttributeValues[attributeNameId] && attributeValues[attributeNameId] != "") {
+                        // collect attribute values to update
                         attributeValuesToUpdate[attributeNameIdVsAttributeValueId[attributeNameId]] = attributeValues[attributeNameId];
-                        needUpdate = true;
-                    } else if (attributeValues.hasOwnProperty(attributeNameId) && attributeValues[attributeNameId] != oldAttributeValues[attributeNameId]) {
-                        // assemble attribute values to create
-                        console.log("attributeNameId", attributeNameId);
+                    } else if (attributeValues.hasOwnProperty(attributeNameId) && !attributeNameIdVsAttributeValueId.hasOwnProperty(attributeNameId)) {
+                        // collect attribute values to create
                         attributeValuesToCreate[attributeNameId] = attributeValues[attributeNameId];
-                        needCreate = true;
+                    } else if (attributeNameIdVsAttributeValueId.hasOwnProperty(attributeNameId) && attributeValues[attributeNameId] == "") {
+                        // collect attribute values to delete
+                        attributeValuesToDelete.push(attributeNameIdVsAttributeValueId[attributeNameId])
                     }
                 }
             }
             // bulk create attribute values
-            console.log("needUpdate", needUpdate);
-            console.log("needCreate", needCreate);
-            console.log("attributeValuesToCreate", attributeValuesToCreate);
             if (Object.keys(attributeValuesToCreate).length)
                 axios.post(constants.SERVER_ADDRESS + "/products/create-attribute-values-for-product/", {
                     productId,
                     "attributeNameIdVsAttributeValue": attributeValuesToCreate
                 });
             // bulk update attribute values
-            console.log("attributeValuesToUpdate", attributeValuesToUpdate);
             if (Object.keys(attributeValuesToUpdate).length)
                 axios.post(constants.SERVER_ADDRESS + "/products/update-attribute-values/", {
                     "attributeValueIdVsAttributeValue": attributeValuesToUpdate
+                });
+            // bulk delete attribute values
+            if (attributeValuesToDelete.length)
+                axios.post(constants.SERVER_ADDRESS + "/products/delete-attribute-values/", {
+                    "attributeValueIdList": attributeValuesToDelete
                 });
 
             navigate("/admin/products");

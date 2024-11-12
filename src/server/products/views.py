@@ -1,6 +1,7 @@
 from rest_framework.viewsets import ModelViewSet
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
+from rest_framework.request import Request
 
 from .models import Product, ProductCategory, AttributeCategory, AttributeName, AttributeValue, \
 fetch_attribute_values_w_attribute_names_and_attribute_category_by_product_id, fetch_attributes_and_attribute_categories_by_category_id
@@ -92,5 +93,12 @@ def update_attribute_values(request):
         update_objects_array.append(object)
     
     AttributeValue.objects.bulk_update(update_objects_array, ['value'])
+    
+    return Response(status=201)
+
+@api_view(['POST'])
+def delete_attribute_values(request : Request):
+    attributeValueIds = request.data['attributeValueIdList']   
+    AttributeValue.objects.filter(id__in=attributeValueIds).delete()
     
     return Response(status=201)
