@@ -7,13 +7,14 @@ import ProductDetailPage from "./pages/ProductDetailPage";
 // Admin pages
 import AuthProvider from "./hooks/useAuth";
 import RequireAuth from "./RequireAuth";
+import AdminRoot from "./admin_pages/AdminRoot";
 import AdminCreateCategoryPage from "./admin_pages/AdminCreateCategoryPage";
 import AdminUpdateCategoryPage from "./admin_pages/AdminUpdateCategoryPage";
 import AdminCategoriesPage from "./admin_pages/AdminCategoriesPage";
 import AdminCreateProductPage from "./admin_pages/AdminCreateProductPage";
 import AdminUpdateProductPage from "./admin_pages/AdminUpdateProductPage";
 import AdminProductsPage from "./admin_pages/AdminProductsPage";
-import AdminRoot from "./admin_pages/AdminRoot";
+import AdminAttributeCategoriesPage from "./admin_pages/AdminAttributeCategoriesPage";
 
 
 export default function App() { 
@@ -33,6 +34,7 @@ export default function App() {
           <Route path="products" element={<AdminProductsPage />} />
           <Route path="products/update/:productId" element={<AdminUpdateProductPage />} />
           <Route path="products/create" element={<AdminCreateProductPage />} />
+          <Route path="attribute-categories" element={<AdminAttributeCategoriesPage />} />
         </Route>
       </Routes>
     </AuthProvider>

@@ -15,24 +15,18 @@ class ProductSerializer(serializers.ModelSerializer):
 
 
 class AttributeCategorySerializer(serializers.ModelSerializer):
-    category = ProductCategorySerializer()
-    
     class Meta:
         model = AttributeCategory
         fields = '__all__'
 
 
 class AttributeNameSerializer(serializers.ModelSerializer):
-    attribute_category = AttributeCategorySerializer()
-
     class Meta:
         model = AttributeName
         fields = '__all__'
 
 
 class AttributeValueSerializer(serializers.ModelSerializer):
-    attribute_name = AttributeNameSerializer()
-
     class Meta:
         model = AttributeValue
         fields = '__all__'
