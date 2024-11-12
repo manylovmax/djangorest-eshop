@@ -80,3 +80,17 @@ def create_attribute_values_for_product(request):
     AttributeValue.objects.bulk_create(insert_objects_array)
     
     return Response(status=201)
+
+
+@api_view(['POST'])
+def update_attribute_values(request):
+    attributeValueIdVsAttributeValue = request.data['attributeValueIdVsAttributeValue']
+    update_objects_array = []
+    for k,v in attributeValueIdVsAttributeValue.items():
+        object = AttributeValue.objects.get(id=k)
+        object.value = v
+        update_objects_array.append(object)
+    
+    AttributeValue.objects.bulk_update(update_objects_array, ['value'])
+    
+    return Response(status=201)
