@@ -18,6 +18,7 @@ export default function AdminUpdateProductPage () {
     const [formErrors, setFormErrors] = useState([]);
     const [attributeCategoriesWithAttributes, setAttributeCategoriesWithAttributes] = useState([]);
     const [attributeValues, setAttributeValues] = useState({});
+    const [oldAttributeValues, setOldAttributeValues] = useState({});
     const [attributeNameIdVsAttributeValueId, setAttributeNameIdVsAttributeValueId] = useState({});
     
 
@@ -45,6 +46,7 @@ export default function AdminUpdateProductPage () {
                         newAttributeNameIdVsAttributeValueId[attribute["attributeNameId"]] = attribute["attributeValueId"];
                     }
                     setAttributeValues(newAttabuteValues);
+                    setOldAttributeValues(newAttabuteValues);
                     setAttributeNameIdVsAttributeValueId(newAttributeNameIdVsAttributeValueId);
                 }
             });
@@ -64,6 +66,40 @@ export default function AdminUpdateProductPage () {
             price: productPrice,
             category: selectedCategoryId
         }).then(response => {
+            let attributeValuesToUpdate = {}, attributeValuesToCreate = {};
+            let needCreate = false, needUpdate = false;
+            console.log("attributeCategoriesWithAttributes", attributeCategoriesWithAttributes);
+            for(let i = 0; i < attributeCategoriesWithAttributes.length; i++) {
+                for(let j = 0; j < attributeCategoriesWithAttributes[i].attributeNames.length; j++) {
+                    let attributeNameId = attributeCategoriesWithAttributes[i].attributeNames[j].attributeNameId;
+                    if (attributeNameIdVsAttributeValueId.hasOwnProperty(attributeNameId) && attributeValues[attributeNameId] != oldAttributeValues[attributeNameId]) {
+                        // assemble attribute values to update
+                        attributeValuesToUpdate[attributeNameIdVsAttributeValueId[attributeNameId]] = attributeValues[attributeNameId];
+                        needUpdate = true;
+                    } else if (attributeValues.hasOwnProperty(attributeNameId) && attributeValues[attributeNameId] != oldAttributeValues[attributeNameId]) {
+                        // assemble attribute values to create
+                        console.log("attributeNameId", attributeNameId);
+                        attributeValuesToCreate[attributeNameId] = attributeValues[attributeNameId];
+                        needCreate = true;
+                    }
+                }
+            }
+            // bulk create attribute values
+            console.log("needUpdate", needUpdate);
+            console.log("needCreate", needCreate);
+            console.log("attributeValuesToCreate", attributeValuesToCreate);
+            if (Object.keys(attributeValuesToCreate).length)
+                axios.post(constants.SERVER_ADDRESS + "/products/create-attribute-values-for-product/", {
+                    productId,
+                    "attributeNameIdVsAttributeValue": attributeValuesToCreate
+                });
+            // bulk update attribute values
+            console.log("attributeValuesToUpdate", attributeValuesToUpdate);
+            if (Object.keys(attributeValuesToUpdate).length)
+                axios.post(constants.SERVER_ADDRESS + "/products/update-attribute-values/", {
+                    "attributeValueIdVsAttributeValue": attributeValuesToUpdate
+                });
+
             navigate("/admin/products");
         });
     }
@@ -110,7 +146,7 @@ export default function AdminUpdateProductPage () {
                 <label htmlFor="inputTitle" className="form-label">Название</label>
                 <input type="text" className={"form-control " + (formErrors.filter(item => item.attribute == "productTitle").length ? "is-invalid" : "is-valid") }
                  id="inputTitle" value={productTitle} onInput={e => setProductTitle(e.target.value)}/>
-                <div class="invalid-feedback">
+                <div className="invalid-feedback">
                     {formErrors.filter(item => item.attribute == "productTitle").map((item, key) => (
                     <div key={key}>{item.value}</div>
                     ))}
@@ -121,7 +157,7 @@ export default function AdminUpdateProductPage () {
                 <label htmlFor="inputPrice" className="form-label">Стоимость</label>
                 <input type="number" className={"form-control " + (formErrors.filter(item => item.attribute == "productPrice").length ? "is-invalid" : "is-valid") }
                  id="inputPrice"  value={productPrice} onInput={e => setProductPrice(e.target.value)}/>
-                <div class="invalid-feedback">
+                <div className="invalid-feedback">
                     {formErrors.filter(item => item.attribute == "productPrice").map((item, key) => (
                     <div key={key}>{item.value}</div>
                     ))}
@@ -132,7 +168,7 @@ export default function AdminUpdateProductPage () {
                 <label htmlFor="textareaDescription" className="form-label">Описание</label>
                 <textarea className={"form-control " + (formErrors.filter(item => item.attribute == "productDescription").length ? "is-invalid" : "is-valid") }
                  id="textareaDescription" rows="3" value={productDescription} onInput={e => setProductDescription(e.target.value)}></textarea>
-                <div class="invalid-feedback">
+                <div className="invalid-feedback">
                     {formErrors.filter(item => item.attribute == "productDescription").map((item, key) => (
                     <div key={key}>{item.value}</div>
                     ))}
