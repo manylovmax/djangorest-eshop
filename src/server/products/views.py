@@ -108,3 +108,9 @@ def get_all_attribute_categories(request: Request) -> Response:
     all_categories_objects = AttributeCategory.objects.all()
     attribute_category_serializer = AttributeCategorySerializer(all_categories_objects, many=True)
     return Response(data=attribute_category_serializer.data)
+
+@api_view(['GET'])
+def get_all_attribute_names(request: Request) -> Response:
+    objects = AttributeName.objects.all()
+    serializer = AttributeNameSerializer(objects, many=True)
+    return Response(data=serializer.data)
