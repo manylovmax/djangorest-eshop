@@ -52,7 +52,7 @@ export default class AdminAttributeNamesPage extends React.Component {
     handleDelete(id, title) {
         const answer = confirm("Удалить \"" + title + "\"?");
         if (answer) {
-            axios.delete(`${constants.SERVER_ADDRESS}/products/attribute-category/${id}/`)
+            axios.delete(`${constants.SERVER_ADDRESS}/products/attribute-name/${id}/`)
             .then(() => this.getPage(1));
         }
     }
@@ -61,7 +61,7 @@ export default class AdminAttributeNamesPage extends React.Component {
         return (
             <>
                 <h1>Названия атрибутов</h1>
-                <Link to="/admin/attribute-categories/create" className="btn btn-success">Создать</Link>
+                <Link to="/admin/attribute-names/create" className="btn btn-success">Создать</Link>
                 <table className="table">
                     <thead>
                         <tr>
