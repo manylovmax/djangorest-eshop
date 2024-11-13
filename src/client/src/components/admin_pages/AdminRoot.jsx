@@ -11,7 +11,7 @@ export default function AdminRoot() {
                     <a className="admin-sidebar-link" href="/admin/categories">Категории продуктов</a>
                     <a className="admin-sidebar-link" href="/admin/products">Продукты</a>
                     <a className="admin-sidebar-link" href="/admin/attribute-categories">Категории атрибутов</a>
-                    <a className="admin-sidebar-link" href="/admin/attributes">Атрибуты</a>
+                    <a className="admin-sidebar-link" href="/admin/attribute-names">Названия атрибутов</a>
                     <a className="admin-sidebar-link" href="/admin/attributes-values">Значения атрибутов</a>
                 </div>
                 <div className="col-md-10">
