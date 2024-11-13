@@ -60,8 +60,7 @@ export default class AdminAttributeValuesPage extends React.Component {
     render() {
         return (
             <>
-                <h1>Названия атрибутов</h1>
-                <Link to="/admin/attribute-names/create" className="btn btn-success">Создать</Link>
+                <h1>Значения атрибутов</h1>
                 <table className="table">
                     <thead>
                         <tr>
@@ -79,7 +78,7 @@ export default class AdminAttributeValuesPage extends React.Component {
                             <td>{attributeValue.product}</td>
                             <td>{this.state.attributeNamesDict[attributeValue.attribute_name] ? this.state.attributeNamesDict[attributeValue.attribute_name].title : "удалено"}</td>
                             <td>{attributeValue.value}</td>
-                            <td><a href={"/admin/attribute-values/update/" + attributeValue.id} className="btn btn-primary">Редактировать</a><div className="btn btn-danger" onClick={() => this.handleDelete(attributeValue.id, attributeValue.value)}>Удалить</div></td>
+                            <td><a href={"/admin/attributes-values/update/" + attributeValue.id} className="btn btn-primary">Редактировать</a><div className="btn btn-danger" onClick={() => this.handleDelete(attributeValue.id, attributeValue.value)}>Удалить</div></td>
                         </tr>
                     ))}
                     </tbody>
