@@ -19,6 +19,7 @@ import AdminCreateAttributeCategoryPage from "./admin_pages/AdminCreateAttribute
 import AdminUpdateAttributeCategoryPage from "./admin_pages/AdminUpdateAttributeCategoryPage";
 import AdminAttributeNamesPage from "./admin_pages/AdminAttributeNamesPage";
 import AdminCreateAttributeNamePage from "./admin_pages/AdminCreateAttributeNamePage";
+import AdminUpdateAttributeNamePage from "./admin_pages/AdminUpdateAttributeNamePage";
 
 
 export default function App() { 
@@ -43,6 +44,7 @@ export default function App() {
           <Route path="attribute-categories/update/:Id" element={<AdminUpdateAttributeCategoryPage />} />
           <Route path="attribute-names" element={<AdminAttributeNamesPage />} />
           <Route path="attribute-names/create" element={<AdminCreateAttributeNamePage />} />
+          <Route path="attribute-names/update/:Id" element={<AdminUpdateAttributeNamePage />} />
         </Route>
       </Routes>
     </AuthProvider>
