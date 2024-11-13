@@ -1,5 +1,5 @@
 import React from "react";
-import { Outlet } from "react-router-dom";
+import { Outlet, Link } from "react-router-dom";
 
 
 export default function AdminRoot() {
@@ -8,11 +8,11 @@ export default function AdminRoot() {
         <div className="container-fluid">
             <div className="row">
                 <div className="col-md-2">
-                    <a className="admin-sidebar-link" href="/admin/categories">Категории продуктов</a>
-                    <a className="admin-sidebar-link" href="/admin/products">Продукты</a>
-                    <a className="admin-sidebar-link" href="/admin/attribute-categories">Категории атрибутов</a>
-                    <a className="admin-sidebar-link" href="/admin/attribute-names">Названия атрибутов</a>
-                    <a className="admin-sidebar-link" href="/admin/attributes-values">Значения атрибутов</a>
+                    <Link className="admin-sidebar-link" to="/admin/categories">Категории продуктов</Link>
+                    <Link className="admin-sidebar-link" to="/admin/products">Продукты</Link>
+                    <Link className="admin-sidebar-link" to="/admin/attribute-categories">Категории атрибутов</Link>
+                    <Link className="admin-sidebar-link" to="/admin/attribute-names">Названия атрибутов</Link>
+                    <Link className="admin-sidebar-link" to="/admin/attributes-values">Значения атрибутов</Link>
                 </div>
                 <div className="col-md-10">
                     <Outlet />
