@@ -32,7 +32,6 @@ export default function AdminUpdateAttributeCategoryPage () {
         axios.put(constants.SERVER_ADDRESS + `/products/attribute-category/${Id}/`, {
             id: Id,
             title,
-            category: categoryId
         }).then(response => {
             navigate("/admin/attribute-categories");
         });
@@ -59,14 +58,8 @@ export default function AdminUpdateAttributeCategoryPage () {
         <div className="container">
             <div className="row">
                 <div className="col-md-12">
-                    <h1>Создать категорию атрибутов</h1>
-                    <div className="mb-3">Категория продуктов:
-                        <select className="form-select" onChange={(e) => setCategoryIdHandler(e.target.value)} id="category-select" name="category" value={categoryId} >
-                            {categories.map((category, idx) => (
-                                <option key={idx} value={category.id}>{category.title}</option>
-                            ))}
-                        </select>
-                        <span>ID: {categoryId} </span><span>Путь: {category?.path}</span></div>
+                    <h1>Редактировать категорию атрибутов</h1>
+                    <div className="mb-3">Категория продуктов: {category.title} (ID: {categoryId}; Путь: {category?.path})</div>
                     <div className="mb-3">
                         <label htmlFor="category-name">Название категории:</label>
                         <input className={"form-control " + (formErrors.filter(item => item.attribute == "title").length ? "is-invalid" : "is-valid") }
