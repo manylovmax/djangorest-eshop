@@ -32,10 +32,10 @@ export default function AdminUpdateProductPage () {
             axios.get(constants.SERVER_ADDRESS + "/products/assignable-categories/").then(response => {
                 setCategories(response.data);
                 setSelectedCategory(response.data.filter(category => category.id == categoryId)[0]);
-            });
-            axios.get(constants.SERVER_ADDRESS + `/products/attribute-names-for-category/${categoryId}/`).then(response => {
+            }).then(() => axios.get(constants.SERVER_ADDRESS + `/products/attribute-names-for-category/${categoryId}/`).then(response => {
                 setAttributeCategoriesWithAttributes(response.data);
-            });
+            }))
+            
             axios.get(constants.SERVER_ADDRESS + `/products/attribute-values-for-product/${productId}/`).then(response => {
                 if (response.data.length) {
                     let newAttabuteValues = {};
@@ -66,7 +66,6 @@ export default function AdminUpdateProductPage () {
             price: productPrice
         }).then(response => {
             let attributeValuesToUpdate = {}, attributeValuesToCreate = {}, attributeValuesToDelete = [];
-            let needCreate = false, needUpdate = false, needDelete = false;
             for(let i = 0; i < attributeCategoriesWithAttributes.length; i++) {
                 for(let j = 0; j < attributeCategoriesWithAttributes[i].attributeNames.length; j++) {
                     const attributeNameId = attributeCategoriesWithAttributes[i].attributeNames[j].attributeNameId;

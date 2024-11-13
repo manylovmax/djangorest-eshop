@@ -19,12 +19,11 @@ export default function AdminUpdateAttributeNamePage () {
         axios.get(constants.SERVER_ADDRESS + "/products/all-attribute-categories/").then(response => {
             newCategories = response.data;
             setCategories(newCategories);
-        });
-        axios.get(constants.SERVER_ADDRESS + `/products/attribute-name/${Id}/`).then(response => {
+        }).then(() => axios.get(constants.SERVER_ADDRESS + `/products/attribute-name/${Id}/`).then(response => {
             setTitle(response.data?.title);
             setAttributeCategoryId(response.data?.attribute_category);
             setCategory(newCategories.filter(c => c.id == response.data.category)[0])
-        });
+        }));
     }, [])
 
     function updateAttributeName() {
