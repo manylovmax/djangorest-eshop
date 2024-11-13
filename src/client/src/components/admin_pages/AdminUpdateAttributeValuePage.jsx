@@ -29,6 +29,7 @@ export default function AdminUpdateAttributeValuePage () {
         axios.put(constants.SERVER_ADDRESS + `/products/attribute-value/${Id}/`, {
             id: Id,
             value,
+            product: attributeValue.product
         }).then(response => {
             navigate("/admin/attributes-values");
         });
