@@ -14,20 +14,17 @@ export default function AdminUpdateAttributeCategoryPage () {
     const [categories, setCategories] = useState([]);
     const [title, setTitle] = useState("");
     const [formErrors, setFormErrors] = useState([]);
-    
-
-    function getCategories() {
-        axios.get(constants.SERVER_ADDRESS + "/products/assignable-categories/").then(response => {
-            setCategories(response.data);
-        });
-    }
 
     useEffect(() => {
-        getCategories();
+        let newCategories = [];
+        axios.get(constants.SERVER_ADDRESS + "/products/assignable-categories/").then(response => {
+            newCategories = response.data;
+            setCategories(newCategories);
+        });
         axios.get(constants.SERVER_ADDRESS + `/products/attribute-category/${Id}/`).then(response => {
             setTitle(response.data?.title);
             setCategoryId(response.data?.category);
-            setCategory(categories.filter(c => c.id == response.data.category)[0])
+            setCategory(newCategories.filter(c => c.id == response.data.category)[0])
         });
     }, [])
 
