@@ -63,8 +63,7 @@ export default function AdminUpdateProductPage () {
         axios.put(`${constants.SERVER_ADDRESS}/products/product/${productId}/`, {
             title: productTitle,
             description: productDescription,
-            price: productPrice,
-            category: selectedCategoryId
+            price: productPrice
         }).then(response => {
             let attributeValuesToUpdate = {}, attributeValuesToCreate = {}, attributeValuesToDelete = [];
             let needCreate = false, needUpdate = false, needDelete = false;
@@ -133,13 +132,7 @@ export default function AdminUpdateProductPage () {
     return (
         <>
             <h1>Обновить продукт</h1>
-            <div className="mb-3">Категория:
-                <select className="form-select" onChange={(e) => setCategoryHandler(e.target.value)} name="category" value={selectedCategoryId} >
-                    {categories.map((category, idx) => (
-                        <option key={idx} value={category.id}>{category.title}</option>
-                    ))}
-                </select>
-                <span>ID: {selectedCategoryId ? selectedCategoryId : ""} </span><span>Путь: {selectedCategory ? selectedCategory.path : ""}</span>
+            <div className="mb-3"><span>Категория: {selectedCategory?.title} (ID: {selectedCategoryId ? selectedCategoryId : ""}; путь: {selectedCategory ? selectedCategory.path : ""})</span>
             </div>
 
             <div className="mb-3">
