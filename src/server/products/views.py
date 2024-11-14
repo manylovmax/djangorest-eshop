@@ -96,6 +96,7 @@ def update_attribute_values(request):
     
     return Response(status=201)
 
+
 @api_view(['POST'])
 def delete_attribute_values(request: Request) -> Response:
     attributeValueIds = request.data['attributeValueIdList']   
@@ -103,11 +104,13 @@ def delete_attribute_values(request: Request) -> Response:
     
     return Response(status=201)
 
+
 @api_view(['GET'])
 def get_all_attribute_categories(request: Request) -> Response:
     all_categories_objects = AttributeCategory.objects.all()
     attribute_category_serializer = AttributeCategorySerializer(all_categories_objects, many=True)
     return Response(data=attribute_category_serializer.data)
+
 
 @api_view(['GET'])
 def get_all_attribute_names(request: Request) -> Response:
