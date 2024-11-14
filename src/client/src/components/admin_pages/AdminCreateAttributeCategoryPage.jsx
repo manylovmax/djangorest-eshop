@@ -16,7 +16,7 @@ export default function AdminCreateAttributeCategoryPage () {
     
 
     function getCategories() {
-        axios.get(constants.SERVER_ADDRESS + "/products/assignable-categories/").then(response => {
+        axios.get(constants.SERVER_ADDRESS + "/api/admin/assignable-categories/").then(response => {
             setCategories(response.data);
             setCategoryId(response.data[0].id);
             setCategory(response.data[0]);
@@ -28,7 +28,7 @@ export default function AdminCreateAttributeCategoryPage () {
     }, [])
 
     function createAttributeCategory() {
-        axios.post(constants.SERVER_ADDRESS + "/products/attribute-category/", {
+        axios.post(constants.SERVER_ADDRESS + "/api/admin/attribute-category/", {
             title,
             category: categoryId
         }).then(response => {

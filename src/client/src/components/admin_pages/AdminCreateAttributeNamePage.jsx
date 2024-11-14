@@ -14,13 +14,13 @@ export default function AdminCreateAttributeNamePage () {
     const [formErrors, setFormErrors] = useState([]);
 
     useEffect(() => {
-        axios.get(constants.SERVER_ADDRESS + "/products/all-attribute-categories/").then(response => {
+        axios.get(constants.SERVER_ADDRESS + "/api/admin/all-attribute-categories/").then(response => {
             setAttributeCategories(response.data);
         });
     }, [])
 
     function createAttributeCategory() {
-        axios.post(constants.SERVER_ADDRESS + `/products/attribute-name/`, {
+        axios.post(constants.SERVER_ADDRESS + `/api/admin/attribute-name/`, {
             attribute_category: attributeCategoryId,
             title,
         }).then(response => {

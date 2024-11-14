@@ -16,17 +16,17 @@ export default function AdminUpdateAttributeValuePage () {
 
     useEffect(() => {
         let model = null;
-        axios.get(constants.SERVER_ADDRESS + `/products/attribute-value/${Id}/`).then(response => {
+        axios.get(constants.SERVER_ADDRESS + `/api/admin/attribute-value/${Id}/`).then(response => {
             model = response.data;
             setValue(response.data?.value);
             setAttributeValue(response.data);
-        }).then(() => axios.get(constants.SERVER_ADDRESS + `/products/attribute-name/${model.attribute_name}`).then(response => {
+        }).then(() => axios.get(constants.SERVER_ADDRESS + `/api/admin/attribute-name/${model.attribute_name}`).then(response => {
             setAttributeName(response.data);
         }))
     }, [])
 
     function updateAttributeValue() {
-        axios.put(constants.SERVER_ADDRESS + `/products/attribute-value/${Id}/`, {
+        axios.put(constants.SERVER_ADDRESS + `/api/admin/attribute-value/${Id}/`, {
             id: Id,
             value,
             product: attributeValue.product

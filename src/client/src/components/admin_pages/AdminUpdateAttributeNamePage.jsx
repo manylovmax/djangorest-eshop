@@ -16,10 +16,10 @@ export default function AdminUpdateAttributeNamePage () {
 
     useEffect(() => {
         let newCategories = [];
-        axios.get(constants.SERVER_ADDRESS + "/products/all-attribute-categories/").then(response => {
+        axios.get(constants.SERVER_ADDRESS + "/api/admin/all-attribute-categories/").then(response => {
             newCategories = response.data;
             setCategories(newCategories);
-        }).then(() => axios.get(constants.SERVER_ADDRESS + `/products/attribute-name/${Id}/`).then(response => {
+        }).then(() => axios.get(constants.SERVER_ADDRESS + `/api/admin/attribute-name/${Id}/`).then(response => {
             setTitle(response.data?.title);
             setAttributeCategoryId(response.data?.attribute_category);
             setCategory(newCategories.filter(c => c.id == response.data.category)[0])
@@ -27,7 +27,7 @@ export default function AdminUpdateAttributeNamePage () {
     }, [])
 
     function updateAttributeName() {
-        axios.put(constants.SERVER_ADDRESS + `/products/attribute-name/${Id}/`, {
+        axios.put(constants.SERVER_ADDRESS + `/api/admin/attribute-name/${Id}/`, {
             id: Id,
             title,
             attribute_category: attributeCategoryId

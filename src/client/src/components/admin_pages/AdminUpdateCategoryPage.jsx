@@ -17,21 +17,21 @@ export default function AdminUpdateCategoryPage () {
     const {categoryId} = useParams();
 
     useEffect(() => {
-        axios.get(constants.SERVER_ADDRESS + "/products/all-categories/").then(response => {
+        axios.get(constants.SERVER_ADDRESS + "/api/admin/all-categories/").then(response => {
             setCategories(response.data);
         });
-        axios.get(`${constants.SERVER_ADDRESS}/products/product-category/${categoryId}/`).then(response => {
+        axios.get(`${constants.SERVER_ADDRESS}/api/admin/product-category/${categoryId}/`).then(response => {
             setCategoryAssignable(response.data?.assignable);
             setCategoryTitle(response.data?.title);
             if (response.data.parent) {
                 setParentCategoryId(response.data?.parent);
-                axios.get(`${constants.SERVER_ADDRESS}/products/product-category/${response.data.parent}/`).then(response => setParentCategory(response.data));
+                axios.get(`${constants.SERVER_ADDRESS}/api/admin/product-category/${response.data.parent}/`).then(response => setParentCategory(response.data));
             }
         })
     }, [])
 
     function updateCategory() {
-        axios.put(`${constants.SERVER_ADDRESS}/products/product-category/${categoryId}/`, {
+        axios.put(`${constants.SERVER_ADDRESS}/api/admin/product-category/${categoryId}/`, {
             title: categoryTitle,
             parent: parentCategoryId ? parentCategoryId : null,
             assignable: categoryAssignable

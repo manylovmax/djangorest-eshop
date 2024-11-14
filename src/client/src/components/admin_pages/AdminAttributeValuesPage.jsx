@@ -23,7 +23,7 @@ export default class AdminAttributeValuesPage extends React.Component {
     }
 
     getattributeNames() {
-        axios.get(constants.SERVER_ADDRESS + "/products/all-attribute-names/").then(response => {
+        axios.get(constants.SERVER_ADDRESS + "/api/admin/all-attribute-names/").then(response => {
             let attributeNamesDict = {}, attributeNames = response.data;
             for (let i = 0; i < attributeNames?.length; i++) {
                 attributeNamesDict[attributeNames[i].id] = attributeNames[i];
@@ -37,7 +37,7 @@ export default class AdminAttributeValuesPage extends React.Component {
     }
 
     getPage(pageNumber) {
-        axios.get(constants.SERVER_ADDRESS + "/products/attribute-value/?page=" + pageNumber).then(response => {
+        axios.get(constants.SERVER_ADDRESS + "/api/admin/attribute-value/?page=" + pageNumber).then(response => {
             this.setState({
                 ...this.state,
                 attributeValues: response.data?.results,
@@ -52,7 +52,7 @@ export default class AdminAttributeValuesPage extends React.Component {
     handleDelete(id, title) {
         const answer = confirm("Удалить \"" + title + "\"?");
         if (answer) {
-            axios.delete(`${constants.SERVER_ADDRESS}/products/attribute-name/${id}/`)
+            axios.delete(`${constants.SERVER_ADDRESS}/api/admin/attribute-name/${id}/`)
             .then(() => this.getPage(1));
         }
     }

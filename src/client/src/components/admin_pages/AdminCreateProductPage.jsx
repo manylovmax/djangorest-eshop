@@ -20,13 +20,13 @@ export default function AdminCreateProductPage () {
     
 
     useEffect(() => {
-        axios.get(constants.SERVER_ADDRESS + "/products/assignable-categories/").then(response => {
+        axios.get(constants.SERVER_ADDRESS + "/api/admin/assignable-categories/").then(response => {
             setCategories(response.data);
             setSelectedCategory(response.data[0]);
             setSelectedCategoryId(response.data[0]?.id);
             
             if (response.data.length)
-                axios.get(constants.SERVER_ADDRESS + `/products/attribute-names-for-category/${response.data[0]?.id}/`).then(response => {
+                axios.get(constants.SERVER_ADDRESS + `/api/admin/attribute-names-for-category/${response.data[0]?.id}/`).then(response => {
                     setAttributeCategoriesWithAttributes(response.data);
                 });
         });
@@ -39,14 +39,14 @@ export default function AdminCreateProductPage () {
     }
 
     function createProduct() {
-        axios.post(constants.SERVER_ADDRESS + "/products/product/", {
+        axios.post(constants.SERVER_ADDRESS + "/api/admin/product/", {
             title: productTitle,
             description: productDescription,
             price: productPrice,
             category: selectedCategoryId,
             
         }).then(response => {
-            axios.post(constants.SERVER_ADDRESS + "/products/create-attribute-values-for-product/", {
+            axios.post(constants.SERVER_ADDRESS + "/api/admin/create-attribute-values-for-product/", {
                 productId: response.data?.id,
                 attributeNameIdVsAttributeValue: attributeValues
             });

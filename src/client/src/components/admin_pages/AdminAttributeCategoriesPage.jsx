@@ -23,7 +23,7 @@ export default class AdminAttributeCategoriesPage extends React.Component {
     }
 
     getCategories() {
-        axios.get(constants.SERVER_ADDRESS + "/products/assignable-categories/").then(response => {
+        axios.get(constants.SERVER_ADDRESS + "/api/admin/assignable-categories/").then(response => {
             let productCategoriesDict = {}, productCategories = response.data;
             for (let i = 0; i < productCategories?.length; i++) {
                 productCategoriesDict[productCategories[i].id] = productCategories[i];
@@ -37,7 +37,7 @@ export default class AdminAttributeCategoriesPage extends React.Component {
     }
 
     getPage(pageNumber) {
-        axios.get(constants.SERVER_ADDRESS + "/products/attribute-category/?page=" + pageNumber).then(response => {
+        axios.get(constants.SERVER_ADDRESS + "/api/admin/attribute-category/?page=" + pageNumber).then(response => {
             this.setState({
                 ...this.state,
                 categories: response.data?.results,
@@ -52,7 +52,7 @@ export default class AdminAttributeCategoriesPage extends React.Component {
     handleDelete(id, title) {
         const answer = confirm("Удалить \"" + title + "\"?");
         if (answer) {
-            axios.delete(`${constants.SERVER_ADDRESS}/products/attribute-category/${id}/`)
+            axios.delete(`${constants.SERVER_ADDRESS}/api/admin/attribute-category/${id}/`)
             .then(() => this.getPage(1));
         }
     }

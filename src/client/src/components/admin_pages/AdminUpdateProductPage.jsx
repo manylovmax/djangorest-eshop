@@ -23,20 +23,20 @@ export default function AdminUpdateProductPage () {
     
 
     useEffect(() => {
-        axios.get(constants.SERVER_ADDRESS + `/products/product/${productId}/`).then(response => {
+        axios.get(constants.SERVER_ADDRESS + `/api/admin/product/${productId}/`).then(response => {
             setProductTitle(response.data?.title);
             setProductDescription(response.data?.description);
             setProductPrice(response.data?.price);
             setSelectedCategoryId(response.data?.category);
             const categoryId = response.data?.category;
-            axios.get(constants.SERVER_ADDRESS + "/products/assignable-categories/").then(response => {
+            axios.get(constants.SERVER_ADDRESS + "/api/admin/assignable-categories/").then(response => {
                 setCategories(response.data);
                 setSelectedCategory(response.data.filter(category => category.id == categoryId)[0]);
-            }).then(() => axios.get(constants.SERVER_ADDRESS + `/products/attribute-names-for-category/${categoryId}/`).then(response => {
+            }).then(() => axios.get(constants.SERVER_ADDRESS + `/api/admin/attribute-names-for-category/${categoryId}/`).then(response => {
                 setAttributeCategoriesWithAttributes(response.data);
             }))
             
-            axios.get(constants.SERVER_ADDRESS + `/products/attribute-values-for-product/${productId}/`).then(response => {
+            axios.get(constants.SERVER_ADDRESS + `/api/admin/attribute-values-for-product/${productId}/`).then(response => {
                 if (response.data.length) {
                     let newAttabuteValues = {};
                     let newAttributeNameIdVsAttributeValueId = {};
@@ -60,7 +60,7 @@ export default function AdminUpdateProductPage () {
     }
 
     function updateProduct() {
-        axios.put(`${constants.SERVER_ADDRESS}/products/product/${productId}/`, {
+        axios.put(`${constants.SERVER_ADDRESS}/api/admin/product/${productId}/`, {
             title: productTitle,
             description: productDescription,
             price: productPrice
@@ -83,18 +83,18 @@ export default function AdminUpdateProductPage () {
             }
             // bulk create attribute values
             if (Object.keys(attributeValuesToCreate).length)
-                axios.post(constants.SERVER_ADDRESS + "/products/create-attribute-values-for-product/", {
+                axios.post(constants.SERVER_ADDRESS + "/api/admin/create-attribute-values-for-product/", {
                     productId,
                     "attributeNameIdVsAttributeValue": attributeValuesToCreate
                 });
             // bulk update attribute values
             if (Object.keys(attributeValuesToUpdate).length)
-                axios.post(constants.SERVER_ADDRESS + "/products/update-attribute-values/", {
+                axios.post(constants.SERVER_ADDRESS + "/api/admin/update-attribute-values/", {
                     "attributeValueIdVsAttributeValue": attributeValuesToUpdate
                 });
             // bulk delete attribute values
             if (attributeValuesToDelete.length)
-                axios.post(constants.SERVER_ADDRESS + "/products/delete-attribute-values/", {
+                axios.post(constants.SERVER_ADDRESS + "/api/admin/delete-attribute-values/", {
                     "attributeValueIdList": attributeValuesToDelete
                 });
 

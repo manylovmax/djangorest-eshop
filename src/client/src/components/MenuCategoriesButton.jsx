@@ -12,7 +12,7 @@ export default function MenuCategoriesButton() {
     const [activeCategory, setActiveCategory] = useState(0);
 
     useEffect(() => {
-        axios.get(constants.SERVER_ADDRESS + "/products/get-categories-tree/").then(response => {
+        axios.get(constants.SERVER_ADDRESS + "/api/get-categories-tree/").then(response => {
             setCategories(response.data);
             setActiveCategory(response.data[0]?.id);
             setSubCategories(response.data[0]?.subcategories);

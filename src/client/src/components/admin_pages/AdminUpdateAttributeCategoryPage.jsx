@@ -17,11 +17,11 @@ export default function AdminUpdateAttributeCategoryPage () {
 
     useEffect(() => {
         let newCategories = [];
-        axios.get(constants.SERVER_ADDRESS + "/products/assignable-categories/").then(response => {
+        axios.get(constants.SERVER_ADDRESS + "/api/admin/assignable-categories/").then(response => {
             newCategories = response.data;
             setCategories(newCategories);
         });
-        axios.get(constants.SERVER_ADDRESS + `/products/attribute-category/${Id}/`).then(response => {
+        axios.get(constants.SERVER_ADDRESS + `/api/admin/attribute-category/${Id}/`).then(response => {
             setTitle(response.data?.title);
             setCategoryId(response.data?.category);
             setCategory(newCategories.filter(c => c.id == response.data.category)[0])
@@ -29,7 +29,7 @@ export default function AdminUpdateAttributeCategoryPage () {
     }, [])
 
     function updateAttributeCategory() {
-        axios.put(constants.SERVER_ADDRESS + `/products/attribute-category/${Id}/`, {
+        axios.put(constants.SERVER_ADDRESS + `/api/admin/attribute-category/${Id}/`, {
             id: Id,
             title,
         }).then(response => {

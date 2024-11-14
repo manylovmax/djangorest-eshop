@@ -18,7 +18,7 @@ export default function AdminProductsPage() {
     }, []);
 
     function getPage(number) {
-        axios.get(`${constants.SERVER_ADDRESS}/products/product/?page=${number}`).then(response => {
+        axios.get(`${constants.SERVER_ADDRESS}/api/admin/product/?page=${number}`).then(response => {
             setPageNumber(number);
             setProducts(response.data?.results);
             setHasNextPage(response.data?.hasNext);
@@ -30,7 +30,7 @@ export default function AdminProductsPage() {
     function handleDelete(id, title) {
         const answer = confirm("Удалить \"" + title + "\"?");
         if (answer) {
-            axios.delete(`${constants.SERVER_ADDRESS}/products/product/${id}/`)
+            axios.delete(`${constants.SERVER_ADDRESS}/api/admin/product/${id}/`)
             .then(() => getPage(1));
         }
     }

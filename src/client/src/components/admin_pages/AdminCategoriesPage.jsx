@@ -20,7 +20,7 @@ export default class AdminCategoriesPage extends React.Component {
     }
 
     getPage(pageNumber) {
-        axios.get(constants.SERVER_ADDRESS + "/products/product-category/?page=" + pageNumber).then(response => {
+        axios.get(constants.SERVER_ADDRESS + "/api/admin/product-category/?page=" + pageNumber).then(response => {
             this.setState({
                 categories: response.data?.results,
                 pageNumber: response.data?.pageNumber,
@@ -34,7 +34,7 @@ export default class AdminCategoriesPage extends React.Component {
     handleDelete(id, title) {
         const answer = confirm("Удалить \"" + title + "\"?");
         if (answer) {
-            axios.delete(`${constants.SERVER_ADDRESS}/products/product-category/${id}/`)
+            axios.delete(`${constants.SERVER_ADDRESS}/api/admin/product-category/${id}/`)
             .then(() => this.getPage(1));
         }
     }

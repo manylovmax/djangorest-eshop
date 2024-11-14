@@ -17,13 +17,13 @@ export default function AdminCreateCategoryPage () {
     
 
     useEffect(() => {
-        axios.get(constants.SERVER_ADDRESS + "/products/all-categories/").then(response => {
+        axios.get(constants.SERVER_ADDRESS + "/api/admin/all-categories/").then(response => {
             setCategories(response.data);
         });
     }, [])
 
     function createCategory() {
-        axios.post(constants.SERVER_ADDRESS + "/products/product-category/", {
+        axios.post(constants.SERVER_ADDRESS + "/api/admin/product-category/", {
             title: categoryTitle,
             parent: parentCategoryId ? parentCategoryId : null,
             assignable: categoryAssignable
