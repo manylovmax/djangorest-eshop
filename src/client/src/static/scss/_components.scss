@@ -8,14 +8,14 @@ body {
 
 .menu-categories-content {
   position: absolute;
-  height: 100vh;
+  height: calc(100vh - 68px);
   overflow-y: auto;
   z-index: 9999;
   background-color: #fff;
   display: flex;
   flex-direction: row;
 
-  .first-level-category {
+  .first-level-category{
     font-weight: bold;
     font-size: 16px;
     margin: 0 20px;
@@ -33,18 +33,26 @@ body {
     cursor: pointer;
     font-size: 16px;
   }
+
   .third-level-category {
     font-weight: 500;
     font-size: 14px;
     cursor: pointer;
     color: var(--bs-gray-600);
-  } 
-  .third-level-category:hover {
+  }
+
+  .third-level-category:hover{
     color: black;
   }
 
   .menu-categories-content_categories {
     margin-right: 20px;
+  }
+
+  a {
+    display: block;
+    text-decoration: none;
+    color: black;
   }
 }
 

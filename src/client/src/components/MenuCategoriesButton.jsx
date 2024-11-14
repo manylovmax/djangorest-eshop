@@ -1,4 +1,5 @@
 import React, {useState, useEffect} from "react";
+import { Link } from "react-router-dom";
 import axios from "axios";
 
 import constants from "../constants";
@@ -30,20 +31,23 @@ export default function MenuCategoriesButton() {
             <div className={"menu-categories-content " + (menuVisible ? "" : "d-none")}>
                 <div className="menu-categories-content_categories">
                 { categories.map((category, idx) => (
-                    <div className={"first-level-category " + (category.id == activeCategory ? "active" : "")} key={idx} 
-                    onMouseOver={() => handleShowSubcategories(category.id)} 
-                    onClick={() => handleShowSubcategories(category.id)}
-                    >
-                        {category.title}
-                    </div>
+                    <Link className={"first-level-category " + (category.id == activeCategory ? "active" : "")} key={idx} 
+                            onMouseOver={() => handleShowSubcategories(category.id)} 
+                            onClick={() => handleShowSubcategories(category.id)}
+                            to={"/category/" + category.id}>{category.title}</Link>
                 ))}
                 </div>
                 <div className="menu-categories-content_subcategories">
                     { subcategories.map((subcategory, idx) => (
-                        <div key={idx} className="second-level-category">{subcategory.title}
-                        { subcategory.subcategories.map((subsubcategory, idx) => (
-                            <div key={idx} className="third-level-category">{subsubcategory.title}</div>
-                        ))}
+                        <div key={idx}>
+                            <Link to={"/category/" + subcategory.id}  className="second-level-category">
+                                {subcategory.title}
+                            </Link>
+                            { subcategory.subcategories.map((subsubcategory, idx) => (
+                                <Link to={"/category/" + subsubcategory.id} key={idx} className="third-level-category">
+                                    {subsubcategory.title}
+                                </Link>
+                            ))}
                         </div>
                     ))}
                 </div>
