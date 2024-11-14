@@ -117,3 +117,24 @@ def get_all_attribute_names(request: Request) -> Response:
     objects = AttributeName.objects.all()
     serializer = AttributeNameSerializer(objects, many=True)
     return Response(data=serializer.data)
+
+
+@api_view(['GET'])
+def get_categories_tree(request: Request) -> Response:
+    def get_category_children(category: ProductCategory) -> list:
+        subcategories = ProductCategory.objects.filter(parent=category).all()
+        categories_list = list()
+        for category in subcategories:
+            category_dict = ProductCategorySerializer(category).data
+            category_dict['subcategories'] = get_category_children(category)
+            categories_list.append(category_dict)
+        return categories_list
+
+    first_level_categories = ProductCategory.objects.filter(parent=None).all()
+    categories_list = list()
+    for category in first_level_categories:
+        category_dict = ProductCategorySerializer(category).data
+        category_dict['subcategories'] = get_category_children(category)
+        categories_list.append(category_dict)
+
+    return Response(data=categories_list)
