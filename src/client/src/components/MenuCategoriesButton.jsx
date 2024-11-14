@@ -32,9 +32,9 @@ export default function MenuCategoriesButton() {
                 <div className="menu-categories-content_categories">
                 { categories.map((category, idx) => (
                     <Link className={"first-level-category " + (category.id == activeCategory ? "active" : "")} key={idx} 
-                            onMouseOver={() => handleShowSubcategories(category.id)} 
-                            onClick={() => handleShowSubcategories(category.id)}
-                            to={"/category/" + category.id}>
+                          onMouseOver={() => handleShowSubcategories(category.id)} 
+                          onClick={() => {handleShowSubcategories(category.id); setMenuVisible(false);}}
+                          to={"/category/" + category.id}>
                         {category.title}
                     </Link>
                 ))}
@@ -42,11 +42,13 @@ export default function MenuCategoriesButton() {
                 <div className="menu-categories-content_subcategories">
                     { subcategories.map((subcategory, idx) => (
                         <div key={idx}>
-                            <Link to={"/category/" + subcategory.id}  className="second-level-category">
+                            <Link to={"/category/" + subcategory.id}  className="second-level-category"
+                                  onClick={() => setMenuVisible(false)}>
                                 {subcategory.title}
                             </Link>
                             { subcategory.subcategories.map((subsubcategory, idx) => (
-                                <Link to={"/category/" + subsubcategory.id} key={idx} className="third-level-category">
+                                <Link to={"/category/" + subsubcategory.id} key={idx} className="third-level-category"
+                                      onClick={() => setMenuVisible(false)}>
                                     {subsubcategory.title}
                                 </Link>
                             ))}
