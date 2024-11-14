@@ -4,12 +4,30 @@
 
 .menu-categories-content {
   position: absolute;
-  font-weight: bold;
-  font-size: 2rem;
   height: 100vh;
   overflow-y: auto;
   z-index: 9999;
   background-color: #fff;
+  display: flex;
+  flex-direction: row;
+
+  .first-level-category {
+    font-weight: bold;
+    font-size: 24px;
+  }
+
+  .second-level-category {
+    font-weight: normal;
+    font-size: 20px;
+  }
+  .third-level-category {
+    font-weight: normal;
+    font-size: 16px;
+  } 
+
+  .menu-categories-content_categories {
+    margin-right: 20px;
+  }
 }
 
 .top-bar {
