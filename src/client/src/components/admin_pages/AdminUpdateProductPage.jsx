@@ -102,17 +102,6 @@ export default function AdminUpdateProductPage () {
         });
     }
 
-
-    function setCategoryHandler(id) {
-        const idNumber = Number(id);
-        setSelectedCategoryId(idNumber);
-        let category = null;
-        if (idNumber)
-            category = categories.filter(category => category.id == idNumber)[0];
-        setSelectedCategory(category);
-    }
-
-
     function validate() {
         let newFormErrors = [];
         if (!productTitle) {
