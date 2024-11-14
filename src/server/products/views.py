@@ -118,7 +118,7 @@ def get_all_attribute_names(request: Request) -> Response:
     serializer = AttributeNameSerializer(objects, many=True)
     return Response(data=serializer.data)
 
-
+# TODO: кешировать дерево категорий
 @api_view(['GET'])
 def get_categories_tree(request: Request) -> Response:
     def get_category_children(category: ProductCategory) -> list:
