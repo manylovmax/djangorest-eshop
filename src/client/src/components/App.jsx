@@ -1,8 +1,9 @@
 import React from "react";
 import {Routes, Route} from "react-router-dom";
 
-import HomePage from "./pages/HomePage"
-import LoginPage from "./pages/LoginPage"
+import PageRoot from "./pages/PageRoot";
+import CategoryPage from "./pages/CategoryPage";
+import LoginPage from "./pages/LoginPage";
 import ProductDetailPage from "./pages/ProductDetailPage";
 // Admin pages
 import AuthProvider from "./hooks/useAuth";
@@ -28,8 +29,11 @@ export default function App() {
    return (
     <AuthProvider>
       <Routes>
-        <Route path="/" element={<HomePage />} />
-        <Route path="/products/:productId" element={<ProductDetailPage />} />
+        <Route path="/" element={<PageRoot />} >
+          <Route path="/products/:productId" element={<ProductDetailPage />} />
+          <Route path="/category/:categoryId" element={<CategoryPage />} />
+        </Route>
+
         <Route path="/login" element={<LoginPage />} />
         <Route
           path="/admin"
