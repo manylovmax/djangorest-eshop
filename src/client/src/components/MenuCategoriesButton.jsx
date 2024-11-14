@@ -8,27 +8,34 @@ export default function MenuCategoriesButton() {
     const [menuVisible, setMenuVisible] = useState(false);
     const [categories, setCategories] = useState([]);
     const [subcategories, setSubCategories] = useState([]);
+    const [activeCategory, setActiveCategory] = useState(0);
 
     useEffect(() => {
         axios.get(constants.SERVER_ADDRESS + "/products/get-categories-tree/").then(response => {
             setCategories(response.data);
-            setSubCategories(response.data[0].subcategories);
-        }
-        )
+            setActiveCategory(response.data[0]?.id);
+            setSubCategories(response.data[0]?.subcategories);
+        });
     }, []);
 
     function handleShowSubcategories(categoryId) {
         const newSubCategories = categories.filter(c => c.id == categoryId)[0]?.subcategories;
         setSubCategories(newSubCategories);
+        setActiveCategory(categoryId);
     }
 
     return (
         <>
             <div onClick={() => setMenuVisible(!menuVisible)} className="menu-categories-button btn btn-primary">Каталог</div>
             <div className={"menu-categories-content " + (menuVisible ? "" : "d-none")}>
-                <div className="menu-categories-content_categories first-level-category">
+                <div className="menu-categories-content_categories">
                 { categories.map((category, idx) => (
-                    <div key={idx} onMouseOver={() => handleShowSubcategories(category.id)} onClick={() => showSubcategories(categoy.id)}>{category.title}</div>
+                    <div className={"first-level-category " + (category.id == activeCategory ? "active" : "")} key={idx} 
+                    onMouseOver={() => handleShowSubcategories(category.id)} 
+                    onClick={() => handleShowSubcategories(category.id)}
+                    >
+                        {category.title}
+                    </div>
                 ))}
                 </div>
                 <div className="menu-categories-content_subcategories">
