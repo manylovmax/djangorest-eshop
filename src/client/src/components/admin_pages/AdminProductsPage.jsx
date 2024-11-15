@@ -39,7 +39,7 @@ export default function AdminProductsPage() {
     return (
         <>
             <h1>Продукты</h1>
-            <a href="/admin/products/create" className="btn btn-success">Создать</a>
+            <Link to="/admin/products/create" className="btn btn-success">Создать</Link>
             <table className="table">
                 <thead>
                     <tr>
