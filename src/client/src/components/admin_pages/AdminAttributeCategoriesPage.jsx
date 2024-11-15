@@ -77,7 +77,7 @@ export default class AdminAttributeCategoriesPage extends React.Component {
                             <th scope="row">{category.id}</th>
                             <td>{category.title}</td>
                             <td>{this.state.productCategoriesDict[category.category] ? this.state.productCategoriesDict[category.category].title : "удалена"}</td>
-                            <td><a href={"/admin/attribute-categories/update/" + category.id} className="btn btn-primary">Редактировать</a><div className="btn btn-danger" onClick={() => this.handleDelete(category.id, category.title)}>Удалить</div></td>
+                            <td><Link to={"/admin/attribute-categories/update/" + category.id} className="btn btn-primary">Редактировать</Link><div className="btn btn-danger" onClick={() => this.handleDelete(category.id, category.title)}>Удалить</div></td>
                         </tr>
                     ))}
                     </tbody>

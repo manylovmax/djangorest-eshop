@@ -61,7 +61,7 @@ export default class AdminCategoriesPage extends React.Component {
                             <td>{category.title}</td>
                             <td>{category.path}</td>
                             <td>{category.assignable ? "да" : "нет" }</td>
-                            <td><a href={"/admin/categories/update/" + category.id} className="btn btn-primary">Редактировать</a><div className="btn btn-danger" onClick={() => this.handleDelete(category.id, category.title)}>Удалить</div></td>
+                            <td><Link to={"/admin/categories/update/" + category.id} className="btn btn-primary">Редактировать</Link><div className="btn btn-danger" onClick={() => this.handleDelete(category.id, category.title)}>Удалить</div></td>
                         </tr>
                     ))}
                     </tbody>

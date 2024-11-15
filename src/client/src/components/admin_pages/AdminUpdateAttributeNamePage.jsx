@@ -22,7 +22,6 @@ export default function AdminUpdateAttributeNamePage () {
         }).then(() => axios.get(constants.SERVER_ADDRESS + `/api/admin/attribute-name/${Id}/`).then(response => {
             setTitle(response.data?.title);
             setAttributeCategoryId(response.data?.attribute_category);
-            setCategory(newCategories.filter(c => c.id == response.data.category)[0])
         }));
     }, [])
 

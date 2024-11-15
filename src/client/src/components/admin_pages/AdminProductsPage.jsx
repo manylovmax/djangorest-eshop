@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
+import {Link} from "react-router-dom";
 
 import Paginator from "../admin_components/Paginatior";
 
@@ -55,7 +56,7 @@ export default function AdminProductsPage() {
                         <td>{product.title}</td>
                         <td>{product.description}</td>
                         <td>
-                            <a href={"/admin/products/update/" + product.id} className="btn btn-primary">Редактировать</a>
+                            <Link to={"/admin/products/update/" + product.id} className="btn btn-primary">Редактировать</Link>
                             <span className="btn btn-danger" onClick={() => handleDelete(product.id, product.title)}>Удалить</span>
                         </td>
                     </tr>
