@@ -27,7 +27,7 @@ export default function MenuCategoriesButton() {
 
     return (
         <>
-            <div onClick={() => setMenuVisible(!menuVisible)} className="menu-categories-button btn btn-primary">{menuVisible ? <i class="bi bi-x-square"></i> : <i class="bi bi-filter-square"></i> } Каталог</div>
+            <div onClick={() => setMenuVisible(!menuVisible)} className="menu-categories-button btn btn-primary">{menuVisible ? <i className="bi bi-x-square"></i> : <i className="bi bi-filter-square"></i> } Каталог</div>
             <div className={"menu-categories-content " + (menuVisible ? "" : "d-none")}>
                 <div className="menu-categories-content_categories">
                 { categories.map((category, idx) => (
