@@ -7,3 +7,6 @@ List the tables in your database:
 
 List how the table looks:
 .schema tablename
+
+Enable table headers when printing select results
+.headers on
