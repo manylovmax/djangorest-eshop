@@ -3,13 +3,16 @@ import axios from "axios";
 
 import { useAuth } from "../hooks/useAuth";
 
+import constants from "../../constants";
+
+
 export default function LoginPage() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const { login } = useAuth();
   const handleLogin = async (e) => {
     e.preventDefault();
-    const {data} = await axios.post('http://127.0.0.1:8000/api/token/', {username, password});
+    const {data} = await axios.post(constants.SERVER_ADDRESS + '/api/token/', {username, password});
     const token = data.access;
     if (token) {
       // Replace with actual authentication logic
