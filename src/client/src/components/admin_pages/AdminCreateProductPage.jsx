@@ -17,6 +17,7 @@ export default function AdminCreateProductPage () {
     const [formErrors, setFormErrors] = useState([]);
     const [attributeCategoriesWithAttributes, setAttributeCategoriesWithAttributes] = useState([]);
     const [attributeValues, setAttributeValues] = useState({});
+    const [images, setImages] = useState([{url: "", file: null}]);
     
 
     useEffect(() => {
@@ -46,12 +47,19 @@ export default function AdminCreateProductPage () {
             category: selectedCategoryId,
             
         }).then(response => {
-            axios.post(constants.SERVER_ADDRESS + "/api/admin/create-attribute-values-for-product/", {
-                productId: response.data?.id,
-                attributeNameIdVsAttributeValue: attributeValues
-            });
-            navigate("/admin/products");
-        });
+            if (Object.keys(attributeValues).length)
+                axios.post(constants.SERVER_ADDRESS + "/api/admin/create-attribute-values-for-product/", {
+                    productId: response.data?.id,
+                    attributeNameIdVsAttributeValue: attributeValues
+                });
+            let data = {productId: response.data?.id};
+            let files = [];
+            for (let i = 0; i < images.length; i++)
+                data['image_' + i] = images[i].file;
+            data['images'] = files;
+            console.log(data);
+            axios.post(constants.SERVER_ADDRESS + "/api/admin/create-images-for-product/", data, {headers: {'Content-Type': 'multipart/form-data'}});
+        }).then(result => navigate("/admin/products"));
     }
 
 
@@ -78,7 +86,26 @@ export default function AdminCreateProductPage () {
         }
         setFormErrors(newFormErrors);
     }
-    useEffect(() => validate(), [productTitle, productDescription, productPrice])
+    useEffect(() => validate(), [productTitle, productDescription, productPrice]);
+
+    function addEmptyImage() {
+        let newImages = [...images];
+        newImages.push({url: "", file: null});
+        setImages(newImages);
+    }
+
+    function setSelectedImage(file, index) {
+        let newImages = [...images];
+        newImages[index].file = file;
+        newImages[index].url = URL.createObjectURL(file);
+        setImages(newImages);
+    }
+
+    function removeImage(index) {
+        let newImages = [...images];
+        newImages.splice(index, 1);
+        setImages(newImages);
+    }
 
     return (
         <>
@@ -124,6 +151,16 @@ export default function AdminCreateProductPage () {
                     ))}
                 </div>
             </div>
+
+
+            {images.map((image, idx) => (
+                <div className="mb-3 p-3 card" key={idx}>
+                    <img className="img-fluid mb-3" src={image.url} alt="" />
+                    <input type="file" onChange={e => setSelectedImage(e.target.files[0], idx)}/>
+                    <button className="btn btn-danger" onClick={e => removeImage(idx)}>Удалить</button>
+                </div>
+            ))}
+            <button onClick={addEmptyImage} className="btn btn-success">Добавить изображение</button>
 
 
             {attributeCategoriesWithAttributes.map((category, key) => (

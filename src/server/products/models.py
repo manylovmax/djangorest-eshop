@@ -1,5 +1,5 @@
-import os
 import uuid
+from pathlib import Path
 
 from django.db import models, connection
 from django.dispatch import receiver
@@ -30,6 +30,7 @@ class ProductCategory(models.Model):
     assignable = models.BooleanField("Назначаемое", default=False)
     
     parent = models.ForeignKey("self", null=True, on_delete=models.SET_NULL)
+
 
 @receiver(models.signals.post_save, sender=ProductCategory)
 def auto_set_category_path_on_change(sender, instance, **kwargs):
@@ -69,9 +70,10 @@ class AttributeValue(models.Model):
 
 
 class ProductImage(models.Model):
-    def product_directory_path(instance):
+    def product_directory_path(instance, filename):
         # file will be uploaded to MEDIA_ROOT/product_<id>/<filename>
-        return "product_{0}_images/{1}".format(instance.product.id, str(uuid.uuid4()))
+        new_filename = str(uuid.uuid4()) + "." + filename.split(".")[1]
+        return "product_{0}_images/{1}".format(instance.product.id, new_filename)
     
     product = models.ForeignKey(Product, on_delete=models.CASCADE)
     file = models.ImageField(upload_to=product_directory_path)
@@ -79,7 +81,6 @@ class ProductImage(models.Model):
 
 
 # These two auto-delete files from filesystem when they are unneeded:
-
 @receiver(models.signals.post_delete, sender=ProductImage)
 def auto_delete_product_image_on_delete(sender, instance, **kwargs):
     """
@@ -87,8 +88,14 @@ def auto_delete_product_image_on_delete(sender, instance, **kwargs):
     when corresponding `ProductImage` object is deleted.
     """
     if instance.file:
-        if os.path.isfile(instance.file.path):
-            os.remove(instance.file.path)
+        path = Path(instance.file.path)
+        if path.is_file():
+            path.unlink()
+            parent_path = path.parent
+            dir_contents_paths = [p for p in parent_path.iterdir()]
+            if len(dir_contents_paths) == 0:
+                parent_path.rmdir()
+
 
 @receiver(models.signals.pre_save, sender=ProductImage)
 def auto_delete_product_image_on_change(sender, instance, **kwargs):
@@ -107,8 +114,9 @@ def auto_delete_product_image_on_change(sender, instance, **kwargs):
 
     new_file = instance.file
     if not old_file == new_file:
-        if os.path.isfile(old_file.path):
-            os.remove(old_file.path)
+        if Path.isfile(old_file.path):
+            Path.unlink(old_file.path)
+
 
 def dictfetchall(cursor):
     """
@@ -117,6 +125,7 @@ def dictfetchall(cursor):
     """
     columns = [col[0] for col in cursor.description]
     return [dict(zip(columns, row)) for row in cursor.fetchall()]
+
 
 def fetch_attribute_values_w_attribute_names_and_attribute_category_by_product_id(id):
     with connection.cursor() as cursor:
@@ -129,6 +138,7 @@ def fetch_attribute_values_w_attribute_names_and_attribute_category_by_product_i
             )
         return dictfetchall(cursor)
     
+
 def fetch_attributes_and_attribute_categories_by_category_id(id):
     with connection.cursor() as cursor:
         cursor.execute(

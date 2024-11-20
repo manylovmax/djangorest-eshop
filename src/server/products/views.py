@@ -1,9 +1,11 @@
 from rest_framework.viewsets import ModelViewSet
-from rest_framework.decorators import api_view
+from rest_framework.decorators import api_view, parser_classes
+from rest_framework.parsers import MultiPartParser
 from rest_framework.response import Response
 from rest_framework.request import Request
+from django.core.files import File
 
-from .models import Product, ProductCategory, AttributeCategory, AttributeName, AttributeValue, \
+from .models import Product, ProductCategory, AttributeCategory, AttributeName, AttributeValue, ProductImage, \
 fetch_attribute_values_w_attribute_names_and_attribute_category_by_product_id, fetch_attributes_and_attribute_categories_by_category_id
 from .serializers import ProductSerializer, ProductCategorySerializer, AttributeCategorySerializer, AttributeNameSerializer, AttributeValueSerializer
 
@@ -138,3 +140,15 @@ def get_categories_tree(request: Request) -> Response:
         categories_list.append(category_dict)
 
     return Response(data=categories_list)
+
+
+@api_view(['POST'])
+@parser_classes([MultiPartParser])
+def load_images_for_product(request: Request) -> Response:
+    product_id = request.data['productId']
+
+    for idx, image in enumerate(request.FILES.values()):
+        model = ProductImage(product_id=product_id, file=File(image), position=idx)
+        model.save()
+    
+    return Response(status=201)
