@@ -53,11 +53,8 @@ export default function AdminCreateProductPage () {
                     attributeNameIdVsAttributeValue: attributeValues
                 });
             let data = {productId: response.data?.id};
-            let files = [];
             for (let i = 0; i < images.length; i++)
                 data['image_' + i] = images[i].file;
-            data['images'] = files;
-            console.log(data);
             axios.post(constants.SERVER_ADDRESS + "/api/admin/create-images-for-product/", data, {headers: {'Content-Type': 'multipart/form-data'}});
         }).then(result => navigate("/admin/products"));
     }

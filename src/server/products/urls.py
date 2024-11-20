@@ -4,7 +4,8 @@ from rest_framework import routers
 from  .views import ProductModelViewSet, ProductCategoryModelViewSet, AttributeCategoryModelViewSet, AttributeNameModelViewSet, AttributeValueModelViewSet, get_asignable_categories, \
     get_attribute_categories_for_product_category, get_attribute_names_for_attribute_category, get_attribute_values_for_product, \
     get_all_categories, get_attributes_and_attribute_categories_for_category, create_attribute_values_for_product, update_attribute_values, \
-    delete_attribute_values, get_all_attribute_categories, get_all_attribute_names, get_categories_tree, load_images_for_product
+    delete_attribute_values, get_all_attribute_categories, get_all_attribute_names, get_categories_tree, load_images_for_product, \
+    get_images_for_product, delete_images
 
 router = routers.DefaultRouter()
 router.register(r'product', ProductModelViewSet)
@@ -31,5 +32,7 @@ urlpatterns = [
         path('all-attribute-categories/', get_all_attribute_categories),
         path('all-attribute-names/', get_all_attribute_names),
         path('create-images-for-product/', load_images_for_product),
+        path('images-for-product/<int:id>/', get_images_for_product),
+        path('delete-images/', delete_images),
     ]))
 ]

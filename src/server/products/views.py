@@ -7,7 +7,8 @@ from django.core.files import File
 
 from .models import Product, ProductCategory, AttributeCategory, AttributeName, AttributeValue, ProductImage, \
 fetch_attribute_values_w_attribute_names_and_attribute_category_by_product_id, fetch_attributes_and_attribute_categories_by_category_id
-from .serializers import ProductSerializer, ProductCategorySerializer, AttributeCategorySerializer, AttributeNameSerializer, AttributeValueSerializer
+from .serializers import ProductSerializer, ProductCategorySerializer, AttributeCategorySerializer, AttributeNameSerializer, AttributeValueSerializer, \
+ProductImageSerializer
 
 
 class ProductModelViewSet(ModelViewSet):
@@ -151,4 +152,20 @@ def load_images_for_product(request: Request) -> Response:
         model = ProductImage(product_id=product_id, file=File(image), position=idx)
         model.save()
     
+    return Response(status=201)
+
+
+@api_view(['GET'])
+def get_images_for_product(request: Request, id: int) -> Response:
+    images = ProductImage.objects.filter(product_id=id).all()
+    data = ProductImageSerializer(images, many=True).data
+
+    return Response(data)
+
+
+@api_view(['POST'])
+def delete_images(request: Request) -> Response:
+    images_ids = request.data["imagesIdList"]
+    ProductImage.objects.filter(id__in=images_ids).delete()
+
     return Response(status=201)

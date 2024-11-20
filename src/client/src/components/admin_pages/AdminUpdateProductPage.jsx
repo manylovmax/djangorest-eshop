@@ -20,6 +20,8 @@ export default function AdminUpdateProductPage () {
     const [attributeValues, setAttributeValues] = useState({});
     const [oldAttributeValues, setOldAttributeValues] = useState({});
     const [attributeNameIdVsAttributeValueId, setAttributeNameIdVsAttributeValueId] = useState({});
+    const [images, setImages] = useState([]);
+    const [imagesToDelete, setImagesToDelete] = useState([]);
     
 
     useEffect(() => {
@@ -48,6 +50,22 @@ export default function AdminUpdateProductPage () {
                     setAttributeValues(newAttabuteValues);
                     setOldAttributeValues(newAttabuteValues);
                     setAttributeNameIdVsAttributeValueId(newAttributeNameIdVsAttributeValueId);
+                }
+            });
+
+
+            
+            axios.get(constants.SERVER_ADDRESS + `/api/admin/images-for-product/${productId}/`).then(response => {
+                if (response.data.length) {
+                    let newImages = [];
+                    for(let i = 0; i < response.data.length; i++) {
+                        newImages[i] = {
+                            url: constants.SERVER_ADDRESS + response.data[i].file,
+                            id: response.data[i].id,
+                            file: null
+                        }
+                    }
+                    setImages(newImages);
                 }
             });
         })
@@ -98,6 +116,27 @@ export default function AdminUpdateProductPage () {
                     "attributeValueIdList": attributeValuesToDelete
                 });
 
+            // delete removed images
+            if (imagesToDelete.length)
+                axios.post(constants.SERVER_ADDRESS + "/api/admin/delete-images/", {
+                    "imagesIdList": imagesToDelete
+                });
+
+            // create added images
+            let newImages = [];
+            for (let i = 0; i < images.length; i++) {
+                if (images[i]?.id)
+                    continue
+                else
+                    newImages.push(images[i])
+            }
+            if (newImages.length){
+                let data = {productId};
+                for (let i = 0; i < newImages.length; i++)
+                    data['image_' + i] = newImages[i].file;
+                axios.post(constants.SERVER_ADDRESS + "/api/admin/create-images-for-product/", data, {headers: {'Content-Type': 'multipart/form-data'}});
+            }
+            
             navigate("/admin/products");
         });
     }
@@ -116,6 +155,29 @@ export default function AdminUpdateProductPage () {
         setFormErrors(newFormErrors);
     }
     useEffect(() => validate(), [productTitle, productDescription, productPrice])
+
+    function addEmptyImage() {
+        let newImages = [...images];
+        newImages.push({url: null, id: null, file: null});
+        setImages(newImages);
+    }
+
+    function setSelectedImage(file, index) {
+        let newImages = [...images];
+        newImages[index].file = file;
+        newImages[index].url = URL.createObjectURL(file);
+        setImages(newImages);
+    }
+
+    function removeImage(index) {
+        let newImages = [...images], newImagesToDelete = [...imagesToDelete];
+        if (images[index]?.id) {
+            newImagesToDelete.push(images[index].id);
+            setImagesToDelete(newImagesToDelete);
+        }
+        newImages.splice(index, 1);
+        setImages(newImages);
+    }
 
     return (
         <>
@@ -155,6 +217,15 @@ export default function AdminUpdateProductPage () {
                     ))}
                 </div>
             </div>
+
+            {images.map((image, idx) => (
+                <div className="mb-3 p-3 card" key={idx}>
+                    <img className="img-fluid mb-3" src={image.url} alt="" />
+                    {image.id ? "" : <input type="file" onChange={e => setSelectedImage(e.target.files[0], idx)}/>}
+                    <button className="btn btn-danger" onClick={e => removeImage(idx)}>Удалить</button>
+                </div>
+            ))}
+            <button onClick={addEmptyImage} className="btn btn-success">Добавить изображение</button>
 
 
             {attributeCategoriesWithAttributes.map((category, key) => (
