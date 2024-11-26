@@ -5,6 +5,8 @@ from rest_framework.response import Response
 from rest_framework.request import Request
 from django.core.files import File
 
+import math
+
 from .models import Product, ProductCategory, AttributeCategory, AttributeName, AttributeValue, ProductImage, \
 fetch_attribute_values_w_attribute_names_and_attribute_category_by_product_id, fetch_attributes_and_attribute_categories_by_category_id
 from .serializers import ProductSerializer, ProductCategorySerializer, AttributeCategorySerializer, AttributeNameSerializer, AttributeValueSerializer, \
@@ -169,3 +171,26 @@ def delete_images(request: Request) -> Response:
     ProductImage.objects.filter(id__in=images_ids).delete()
 
     return Response(status=201)
+
+
+@api_view(['GET'])
+def get_products_cards(request: Request, category_id: int) -> Response:
+    PAGE_SIZE = 8
+    page_number = int(request.GET.get('page', 1))
+    products = Product.objects.filter(category_id=category_id).all()[((page_number -1) * PAGE_SIZE):(page_number * PAGE_SIZE)]
+    products_count = Product.objects.filter(category_id=category_id).count()
+    pages_count = math.ceil(products_count / PAGE_SIZE)
+    products_serialized = ProductSerializer(products, many=True).data
+    for product_dict in products_serialized:
+        images = ProductImage.objects.filter(product_id=product_dict['id']).all()
+        images_serialized = ProductImageSerializer(images, many=True).data
+        product_dict['images'] = images_serialized
+    
+    return Response({
+        'count': products_count,
+        'pages': pages_count,
+        'pageNumber': page_number,
+        'hasPrevious': page_number > 1,
+        'hasNext': page_number < pages_count,
+        'results': products_serialized
+    })

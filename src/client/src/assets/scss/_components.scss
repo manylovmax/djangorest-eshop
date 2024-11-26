@@ -192,3 +192,19 @@ body {
   font-size: 14px;
   font-weight: 500;
 }
+
+.product-card {
+  .images-slider {
+    text-align: center;
+    img {
+      object-fit: contain;
+      height: 350px;
+      width: 350px;
+    }
+  }
+}
+
+.product-card-link {
+  text-decoration: none;
+  color: black;
+}
