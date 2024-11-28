@@ -45,7 +45,6 @@ export default function AdminProductsPage() {
                     <tr>
                         <th scope="col">ID</th>
                         <th scope="col">Название</th>
-                        <th scope="col">Описание</th>
                         <th scope="col">Действия</th>
                     </tr>
                 </thead>
@@ -54,7 +53,6 @@ export default function AdminProductsPage() {
                     <tr key={idx}>
                         <th scope="row">{product.id}</th>
                         <td>{product.title}</td>
-                        <td>{product.description}</td>
                         <td>
                             <Link to={"/admin/products/update/" + product.id} className="btn btn-primary">Редактировать</Link>
                             <span className="btn btn-danger" onClick={() => handleDelete(product.id, product.title)}>Удалить</span>
