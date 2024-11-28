@@ -194,3 +194,17 @@ def get_products_cards(request: Request, category_id: int) -> Response:
         'hasNext': page_number < pages_count,
         'results': products_serialized
     })
+
+
+@api_view(['GET'])
+def get_product(request: Request, id: int) -> Response:
+    product = Product.objects.get(pk=id)
+    product_serialized = ProductSerializer(product).data
+    images = ProductImage.objects.filter(product_id=id).all()
+    images_serialized = ProductImageSerializer(images, many=True).data
+    product_serialized['images'] = images_serialized
+    category = product.category
+    category_serialized = ProductCategorySerializer(category).data
+    product_serialized['category'] = category_serialized
+
+    return Response(data=product_serialized)
