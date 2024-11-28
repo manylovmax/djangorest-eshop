@@ -127,10 +127,10 @@ def dictfetchall(cursor):
     return [dict(zip(columns, row)) for row in cursor.fetchall()]
 
 
-def fetch_attribute_values_w_attribute_names_and_attribute_category_by_product_id(id):
+def fetch_attribute_values_w_attribute_names_by_product_id(id):
     with connection.cursor() as cursor:
         cursor.execute(
-            "SELECT products_attributevalue.id as attributeValueId, products_attributevalue.value as attributeValueValue, products_attributename.title as attributeNameTitle, products_attributename.id as attributeNameId "\
+            "SELECT products_attributevalue.id as attributeValueId, products_attributevalue.value as attributeValueValue, products_attributename.id as attributeNameId "\
             "FROM products_attributevalue "\
             "INNER JOIN products_attributename "\
             "ON products_attributevalue.attribute_name_id = products_attributename.id "\

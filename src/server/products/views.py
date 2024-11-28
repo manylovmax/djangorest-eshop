@@ -8,7 +8,7 @@ from django.core.files import File
 import math
 
 from .models import Product, ProductCategory, AttributeCategory, AttributeName, AttributeValue, ProductImage, \
-fetch_attribute_values_w_attribute_names_and_attribute_category_by_product_id, fetch_attributes_and_attribute_categories_by_category_id
+fetch_attribute_values_w_attribute_names_by_product_id, fetch_attributes_and_attribute_categories_by_category_id
 from .serializers import ProductSerializer, ProductCategorySerializer, AttributeCategorySerializer, AttributeNameSerializer, AttributeValueSerializer, \
 ProductImageSerializer
 
@@ -65,7 +65,7 @@ def get_attribute_names_for_attribute_category(request, id):
 
 @api_view(['GET'])
 def get_attribute_values_for_product(request, id):
-    rows =  fetch_attribute_values_w_attribute_names_and_attribute_category_by_product_id(id)
+    rows =  fetch_attribute_values_w_attribute_names_by_product_id(id)
     return Response(data=rows)
 
 
@@ -206,5 +206,9 @@ def get_product(request: Request, id: int) -> Response:
     category = product.category
     category_serialized = ProductCategorySerializer(category).data
     product_serialized['category'] = category_serialized
+    categories_ids = category.path.split('/')[1:-1]
+    path_categories = ProductCategory.objects.filter(id__in=categories_ids).all()
+    path_categories_serialized = ProductCategorySerializer(path_categories, many=True).data
+    product_serialized['pathCategories'] = path_categories_serialized
 
     return Response(data=product_serialized)
