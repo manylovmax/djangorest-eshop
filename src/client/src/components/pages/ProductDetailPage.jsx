@@ -78,11 +78,7 @@ export default function ProductDetailPage() {
                     <ProductPrice addToCart={() => addToCart(product.id)} price={product.price} />
                 </div>
             </div>
-            <div className="row">
-                <div className="col-md-8">
-                    <ProductDetails product={product} attributeCategoriesWithAttributes={attributeCategoriesWithAttributes} attributeValues={attributeValues} />
-                </div>
-            </div>
+            <ProductDetails product={product} attributeCategoriesWithAttributes={attributeCategoriesWithAttributes} attributeValues={attributeValues} />
         </>
     );
 }

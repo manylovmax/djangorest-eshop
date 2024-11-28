@@ -19,16 +19,20 @@ export default function ProductDetails({product, attributeCategoriesWithAttribut
                     {attributeCategoriesWithAttributes.map((category, key) => (
                         <div className="mb-3 card p-3" key={key}>
                             <h5>{category.attributeCategoryTitle}</h5>
+                            <div className="row">
                             {category.attributeNames.map((attributeName, idx) => {
                                 if (attributeValues.hasOwnProperty(attributeName.attributeNameId))
                                     return(
-                                        <div className="mb-3" key={attributeName.attributeNameId}>
-                                            <span>{attributeName.attributeNameTitle}</span>: <span>{attributeValues.hasOwnProperty(attributeName.attributeNameId) ? attributeValues[attributeName.attributeNameId]: ""}</span>
+                                        <div className="mb-3 col-md-6" key={attributeName.attributeNameId}>
+                                            <div className="attribute">
+                                                <div className="attribute__title"><span className="attribute__title-text">{attributeName.attributeNameTitle}</span></div><div className="attribute__value">{attributeValues.hasOwnProperty(attributeName.attributeNameId) ? attributeValues[attributeName.attributeNameId]: ""}</div>
+                                            </div>
                                         </div>
                                     )
                                 else
-                            return ""
-                        })}
+                                    return ""
+                            })}
+                            </div>
                         </div>
 
                     ))}

@@ -226,3 +226,35 @@ body {
   text-decoration: none;
   color: black;
 }
+
+.attribute {
+  display: flex;
+  flex-direction: row;
+}
+
+.attribute__title, .attribute__value {
+  position: relative;
+  flex: 0 0 auto;
+  width: 50%;
+  background: hsl(0, 0%, 100%);
+}
+
+.attribute__title-text {
+  position: relative;
+  background: #fff;
+  padding-right: 3px;
+}
+
+.attribute__value {
+  padding-left: 3px;
+}
+
+.attribute__title:before{
+    border-bottom: 1px dotted var(--bs-gray-500);
+    bottom: .4em;
+    content: "";
+    display: block;
+    left: 0;
+    position: absolute;
+    width: 100%;
+}
