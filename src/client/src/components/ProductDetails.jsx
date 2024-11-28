@@ -17,7 +17,7 @@ export default function ProductDetails({product, attributeCategoriesWithAttribut
             <div className="row">
                 <div className="col-12">
                     {attributeCategoriesWithAttributes.map((category, key) => (
-                        <div className="mb-3 card p-3" key={key}>
+                        <div className="mb-3" key={key}>
                             <h5>{category.attributeCategoryTitle}</h5>
                             <div className="row">
                             {category.attributeNames.map((attributeName, idx) => {

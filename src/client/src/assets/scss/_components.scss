@@ -230,6 +230,8 @@ body {
 .attribute {
   display: flex;
   flex-direction: row;
+  align-items: flex-end;
+  font-size: .875rem;
 }
 
 .attribute__title, .attribute__value {
