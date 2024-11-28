@@ -149,14 +149,15 @@ export default function AdminCreateProductPage () {
                 </div>
             </div>
 
-
+            <div className="row">
             {images.map((image, idx) => (
-                <div className="mb-3 p-3 card" key={idx}>
+                <div className="mb-3 p-3 card col-md-4" key={idx}>
                     <img className="img-fluid mb-3" src={image.url} alt="" />
                     <input type="file" onChange={e => setSelectedImage(e.target.files[0], idx)}/>
                     <button className="btn btn-danger" onClick={e => removeImage(idx)}>Удалить</button>
                 </div>
             ))}
+            </div>
             <button onClick={addEmptyImage} className="btn btn-success">Добавить изображение</button>
 
 
