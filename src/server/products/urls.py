@@ -19,6 +19,8 @@ urlpatterns = [
         path('get-categories-tree/', get_categories_tree),
         path('get-products-cards/<int:category_id>', get_products_cards),
         path('get-product/<int:id>', get_product),
+        path('attribute-names-for-category/<int:id>', get_attributes_and_attribute_categories_for_category),
+        path('attribute-values-for-product/<int:id>', get_attribute_values_for_product),
     ])),
     path('api/admin/', include([
         path('', include(router.urls)),

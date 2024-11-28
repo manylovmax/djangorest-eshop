@@ -1,18 +1,12 @@
 import React from "react";
 
 
-export default function ProductDetails(props) {
-
-    const product = {
-        // https://www.ozon.ru/product/xiaomi-smartfon-redmi-note-13-8-256-gb-chernyy-1405138161/?from_sku=1405138161&oos_search=false
-        title : "Xiaomi Смартфон Redmi Note 13 8/256 ГБ, черный",
-        description: "Xiaomi Смартфон Redmi Note 13 8/256 ГБ, черный"
-    }
+export default function ProductDetails({product, attributeCategoriesWithAttributes, attributeValues}) {
     return (
         <>
             <div className="row">
                 <div className="col-12">
-                    Описание
+                    {product.description}
                 </div>
             </div>
             <div className="row">
@@ -22,7 +16,17 @@ export default function ProductDetails(props) {
             </div>
             <div className="row">
                 <div className="col-12">
-                    Характеристики
+                    {attributeCategoriesWithAttributes.map((category, key) => (
+                        <div className="mb-3 card p-3" key={key}>
+                            <h5>{category.attributeCategoryTitle}</h5>
+                            {category.attributeNames.map((attributeName, idx) => (
+                                <div className="mb-3" key={attributeName.attributeNameId}>
+                                    <span>{attributeName.attributeNameTitle}</span>: <span>{attributeValues.hasOwnProperty(attributeName.attributeNameId) ? attributeValues[attributeName.attributeNameId]: ""}</span>
+                                </div>
+                            ))}
+                        </div>
+
+                    ))}
                 </div>
             </div>
         </>
