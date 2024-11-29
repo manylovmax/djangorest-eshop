@@ -178,7 +178,7 @@ def get_products_cards_for_category(request: Request, category_id: int) -> Respo
     PAGE_SIZE = 8
     page_number = int(request.GET.get('page', 1))
     products = Product.objects.filter(category__path__contains=f'/{category_id}/').all()[((page_number -1) * PAGE_SIZE):(page_number * PAGE_SIZE)]
-    products_count = Product.objects.filter(category_id=category_id).count()
+    products_count = Product.objects.filter(category__path__contains=f'/{category_id}/').count()
     pages_count = math.ceil(products_count / PAGE_SIZE)
     products_serialized = ProductSerializer(products, many=True).data
     for product_dict in products_serialized:
