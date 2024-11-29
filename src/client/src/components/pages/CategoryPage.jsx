@@ -38,7 +38,7 @@ export default function CategoryPage() {
 
     useEffect(() => {
         getPage(1);
-    }, []);
+    }, [categoryId]);
 
 
     return (
