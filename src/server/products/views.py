@@ -174,10 +174,10 @@ def delete_images(request: Request) -> Response:
 
 
 @api_view(['GET'])
-def get_products_cards(request: Request, category_id: int) -> Response:
+def get_products_cards_for_category(request: Request, category_id: int) -> Response:
     PAGE_SIZE = 8
     page_number = int(request.GET.get('page', 1))
-    products = Product.objects.filter(category_id=category_id).all()[((page_number -1) * PAGE_SIZE):(page_number * PAGE_SIZE)]
+    products = Product.objects.filter(category__path__contains=f'/{category_id}/').all()[((page_number -1) * PAGE_SIZE):(page_number * PAGE_SIZE)]
     products_count = Product.objects.filter(category_id=category_id).count()
     pages_count = math.ceil(products_count / PAGE_SIZE)
     products_serialized = ProductSerializer(products, many=True).data
