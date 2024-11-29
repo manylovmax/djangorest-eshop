@@ -33,6 +33,12 @@ export default function AdminCreateProductPage () {
         });
     }, [])
 
+    useEffect(() => {
+        axios.get(constants.SERVER_ADDRESS + `/api/admin/attribute-names-for-category/${selectedCategoryId}/`).then(response => {
+            setAttributeCategoriesWithAttributes(response.data);
+        });
+    }, [selectedCategoryId])
+
     function setAttributeValue(id, value) {
         let newAttributeValues = {...attributeValues};
         newAttributeValues[id] = value;
