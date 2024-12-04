@@ -1,9 +1,11 @@
 Проект находится в стадии разработки.
 
 Установка зависимостей фронтенда: ./src/frontend$ npm i
+
 Установка зависимостей бекенда: ./src/backend$ pip install -r requirements.txt
 
 Запуск фронтенда: ./src/frontend$ npm run dev
+
 Запуск бекенда: ./src/backend$ python manage.py runserver
 
 ### TODO:
