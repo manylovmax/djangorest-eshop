@@ -18,7 +18,7 @@ export default function TopBar() {
                     <SearchBar/>
                 </div>
                 <div className="col-md-4">
-                    { user ? <Link to="/account" className="btn btn-success">Аккаунт</Link> : <Link to="/login" className="btn btn-success">Войти</Link> } 
+                    { user ? <Link to="/user/account" className="btn btn-success">Аккаунт</Link> : <Link to="/login" className="btn btn-success">Войти</Link> } 
                     Заказы, Избранное, Корзина 
                 </div>
             </div>

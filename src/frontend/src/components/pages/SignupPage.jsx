@@ -7,7 +7,7 @@ import { useAuth } from "../hooks/useAuth";
 import constants from "../../constants";
 
 
-export default function LoginPage() {
+export default function SignupPage() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const { login } = useAuth();
@@ -43,8 +43,7 @@ export default function LoginPage() {
               onChange={(e) => setPassword(e.target.value)}
             />
           </div>
-          <button className="btn btn-success" type="submit">Войти</button>
-          <Link to="/signup">Регистрация</Link>
+          <button className="btn btn-success" type="submit">Регистрация</button>
         </form>
       </div>
     </div>

@@ -25,6 +25,8 @@ import AdminUpdateAttributeNamePage from "./admin_pages/AdminUpdateAttributeName
 import AdminAttributeValuesPage from "./admin_pages/AdminAttributeValuesPage";
 import AdminUpdateAttributeValuePage from "./admin_pages/AdminUpdateAttributeValuePage";
 import AccountPage from "./pages/AccountPage";
+import SignupPage from "./pages/SignupPage";
+import UserRoot from "./pages/UserRoot";
 
 
 export default function App() { 
@@ -35,7 +37,10 @@ export default function App() {
           <Route path="/products/:productId" element={<ProductDetailPage />} />
           <Route path="/category/:categoryId" element={<CategoryPage />} />
           <Route path="/login" element={<LoginPage />} />
-          <Route path="/account" element={<AccountPage />} />
+          <Route path="/signup" element={<SignupPage />} />
+          <Route path="/user" element={<RequireAdminAuth><UserRoot /></RequireAdminAuth>} >
+            <Route path="account" element={<AccountPage />} />
+          </Route>
         </Route>
         <Route
           path="/admin"
