@@ -38,7 +38,7 @@ export default function LoginPage() {
             />
           </div>
           <div className="mb-3">
-            <label htmlFor="password" className="from-label">Password:</label>
+            <label htmlFor="password" className="from-label">Пароль:</label>
             <input id="password" type="password" value={password} className="form-control"
               onChange={(e) => setPassword(e.target.value)}
             />
