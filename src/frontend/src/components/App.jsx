@@ -8,6 +8,7 @@ import ProductDetailPage from "./pages/ProductDetailPage";
 // Admin pages
 import AuthProvider from "./hooks/useAuth";
 import RequireAuth from "./RequireAuth";
+import RequireAdminAuth from "./RequireAdminAuth";
 import AdminRoot from "./admin_pages/AdminRoot";
 import AdminCreateCategoryPage from "./admin_pages/AdminCreateCategoryPage";
 import AdminUpdateCategoryPage from "./admin_pages/AdminUpdateCategoryPage";
@@ -23,6 +24,7 @@ import AdminCreateAttributeNamePage from "./admin_pages/AdminCreateAttributeName
 import AdminUpdateAttributeNamePage from "./admin_pages/AdminUpdateAttributeNamePage";
 import AdminAttributeValuesPage from "./admin_pages/AdminAttributeValuesPage";
 import AdminUpdateAttributeValuePage from "./admin_pages/AdminUpdateAttributeValuePage";
+import AccountPage from "./pages/AccountPage";
 
 
 export default function App() { 
@@ -32,12 +34,12 @@ export default function App() {
         <Route path="/" element={<PageRoot />} >
           <Route path="/products/:productId" element={<ProductDetailPage />} />
           <Route path="/category/:categoryId" element={<CategoryPage />} />
+          <Route path="/account" element={<AccountPage />} />
         </Route>
-
         <Route path="/login" element={<LoginPage />} />
         <Route
           path="/admin"
-          element={<RequireAuth><AdminRoot /></RequireAuth>}
+          element={<RequireAdminAuth><AdminRoot /></RequireAdminAuth>}
         >
           <Route path="categories" element={<AdminCategoriesPage />} />
           <Route path="categories/create" element={<AdminCreateCategoryPage />} />

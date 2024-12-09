@@ -15,10 +15,14 @@ export default function LoginPage() {
     const {data} = await axios.post(constants.SERVER_ADDRESS + '/api/token/', {username, password});
     const token = data.access;
     if (token) {
-      // Replace with actual authentication logic
-      await login({ username, token });
+      let isAdmin = false;
+      let userResponse  = await axios.get(constants.SERVER_ADDRESS + '/api/me', {headers: {
+        Authorization: "Bearer " + token
+      }});
+      isAdmin = userResponse.data.isAdmin;
+      await login({ username, token, isAdmin });
     } else {
-      alert("Invalid username or password");
+      alert("Неверный логин или пароль.");
     }
   };
   

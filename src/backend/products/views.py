@@ -4,6 +4,9 @@ from rest_framework.parsers import MultiPartParser
 from rest_framework.response import Response
 from rest_framework.request import Request
 from django.core.files import File
+# from  rest_framework_simplejwt.authentication import JWTAuthentication
+from rest_framework.decorators import permission_classes
+from rest_framework.permissions import IsAuthenticated
 
 import math
 
@@ -212,3 +215,14 @@ def get_product(request: Request, id: int) -> Response:
     product_serialized['pathCategories'] = path_categories_serialized
 
     return Response(data=product_serialized)
+
+
+@api_view(['GET'])
+# @authentication_classes([JWTAuthentication])
+@permission_classes([IsAuthenticated])
+def get_user(request: Request) -> Response:
+    return Response(data={
+        'firstName': request.user.first_name,
+        'lastName': request.user.last_name,
+        'isAdmin': request.user.is_superuser
+    })

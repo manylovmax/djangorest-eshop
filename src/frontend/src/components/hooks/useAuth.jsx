@@ -12,7 +12,7 @@ export default function AuthProvider ({ children }) {
   // call this function when you want to authenticate the user
   const login = async (data) => {
     setUser(data);
-    navigate("/admin");
+    navigate("/");
   };
 
   // call this function to sign out logged in user
