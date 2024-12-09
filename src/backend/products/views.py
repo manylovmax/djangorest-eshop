@@ -1,3 +1,5 @@
+from django.contrib.auth.models import User
+from django.db.utils import IntegrityError
 from rest_framework.viewsets import ModelViewSet
 from rest_framework.decorators import api_view, parser_classes
 from rest_framework.parsers import MultiPartParser
@@ -226,3 +228,17 @@ def get_user(request: Request) -> Response:
         'lastName': request.user.last_name,
         'isAdmin': request.user.is_superuser
     })
+
+
+@api_view(['POST'])
+def signup(request: Request) -> Response:
+    response={'success': True}
+    try:
+        new_user = User.objects.create_user(username=request.data['username'],
+                                            password=request.data['password'])
+    except IntegrityError:
+        response = {'success': False,
+                    'errors': [{'attribute': 'username', 
+                                'value': f'Юзернейм "{request.data['username']}" уже занят.'}]}
+
+    return Response(data=response)
