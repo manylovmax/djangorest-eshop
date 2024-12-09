@@ -34,9 +34,9 @@ export default function App() {
         <Route path="/" element={<PageRoot />} >
           <Route path="/products/:productId" element={<ProductDetailPage />} />
           <Route path="/category/:categoryId" element={<CategoryPage />} />
+          <Route path="/login" element={<LoginPage />} />
           <Route path="/account" element={<AccountPage />} />
         </Route>
-        <Route path="/login" element={<LoginPage />} />
         <Route
           path="/admin"
           element={<RequireAdminAuth><AdminRoot /></RequireAdminAuth>}
