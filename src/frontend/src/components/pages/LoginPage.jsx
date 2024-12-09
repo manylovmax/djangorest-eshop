@@ -17,7 +17,7 @@ export default function LoginPage() {
     if (token) {
       let isAdmin = false;
       let userResponse  = await axios.get(constants.SERVER_ADDRESS + '/api/me', {headers: {
-        Authorization: "Bearer " + tokenLoginPage
+        Authorization: "Bearer " + token
       }});
       isAdmin = userResponse.data.isAdmin;
       await login({ username, token, isAdmin });
