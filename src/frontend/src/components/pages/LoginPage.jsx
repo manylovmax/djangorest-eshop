@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+// import { Link } from "react-router-dom";
 import axios from "axios";
 
 import { useAuth } from "../hooks/useAuth";
@@ -42,7 +43,8 @@ export default function LoginPage() {
               onChange={(e) => setPassword(e.target.value)}
             />
           </div>
-          <button className="btn btn-success" type="submit">Login</button>
+          <button className="btn btn-success" type="submit">Войти</button>
+          {/* <Link to="/signup">Регистрация</Link> */}
         </form>
       </div>
     </div>
