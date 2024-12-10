@@ -38,7 +38,7 @@ export default function App() {
           <Route path="/category/:categoryId" element={<CategoryPage />} />
           <Route path="/login" element={<LoginPage />} />
           <Route path="/signup" element={<SignupPage />} />
-          <Route path="/user" element={<RequireAdminAuth><UserRoot /></RequireAdminAuth>} >
+          <Route path="/user" element={<RequireAuth><UserRoot /></RequireAuth>} >
             <Route path="account" element={<AccountPage />} />
           </Route>
         </Route>
