@@ -25,13 +25,16 @@ export default function SignupPage() {
   function validate() {
     let newFormErrors = [];
     if (!username) {
-        newFormErrors.push({attribute: "username", value: "Необходимо ввести значение"})
+      newFormErrors.push({attribute: "username", value: "Необходимо ввести значение"})
     }
     if (!password) {
-        newFormErrors.push({attribute: "password", value: "Необходимо ввести значение"})
+      newFormErrors.push({attribute: "password", value: "Необходимо ввести значение"})
     }
     if (!passwordConfirm) {
-        newFormErrors.push({attribute: "passwordConfirm", value: "Необходимо ввести значение"})
+      newFormErrors.push({attribute: "passwordConfirm", value: "Необходимо ввести значение"})
+    }
+    if (password != passwordConfirm) {
+      newFormErrors.push({attribute: "passwordConfirm", value: "Пароль и подтверждение пароля должны соответсвовать"})
     }
     setFormErrors(newFormErrors);
   }
