@@ -5,6 +5,9 @@ import PageRoot from "./pages/PageRoot";
 import CategoryPage from "./pages/CategoryPage";
 import LoginPage from "./pages/LoginPage";
 import ProductDetailPage from "./pages/ProductDetailPage";
+import AccountPage from "./pages/AccountPage";
+import SignupPage from "./pages/SignupPage";
+import UserRoot from "./pages/UserRoot";
 // Admin pages
 import AuthProvider from "./hooks/useAuth";
 import RequireAuth from "./RequireAuth";
@@ -24,9 +27,6 @@ import AdminCreateAttributeNamePage from "./admin_pages/AdminCreateAttributeName
 import AdminUpdateAttributeNamePage from "./admin_pages/AdminUpdateAttributeNamePage";
 import AdminAttributeValuesPage from "./admin_pages/AdminAttributeValuesPage";
 import AdminUpdateAttributeValuePage from "./admin_pages/AdminUpdateAttributeValuePage";
-import AccountPage from "./pages/AccountPage";
-import SignupPage from "./pages/SignupPage";
-import UserRoot from "./pages/UserRoot";
 
 
 export default function App() { 
