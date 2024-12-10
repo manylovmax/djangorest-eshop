@@ -1,4 +1,5 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import {useNavigate} from "react-router-dom";
 import { Link } from "react-router-dom";
 import axios from "axios";
 
@@ -10,7 +11,15 @@ import constants from "../../constants";
 export default function LoginPage() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
-  const { login } = useAuth();
+  const { user, login } = useAuth();
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (user)
+      navigate("/");
+  }, []);
+
+
   const handleLogin = async (e) => {
     e.preventDefault();
     const {data} = await axios.post(constants.SERVER_ADDRESS + '/api/token/', {username, password});
