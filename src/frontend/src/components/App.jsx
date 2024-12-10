@@ -1,6 +1,11 @@
 import React from "react";
 import {Routes, Route} from "react-router-dom";
 
+// Helper components
+import AuthProvider from "./hooks/useAuth";
+import RequireAuth from "./RequireAuth";
+import RequireAdminAuth from "./RequireAdminAuth";
+// Client pages
 import PageRoot from "./pages/PageRoot";
 import CategoryPage from "./pages/CategoryPage";
 import LoginPage from "./pages/LoginPage";
@@ -9,9 +14,6 @@ import AccountPage from "./pages/AccountPage";
 import SignupPage from "./pages/SignupPage";
 import UserRoot from "./pages/UserRoot";
 // Admin pages
-import AuthProvider from "./hooks/useAuth";
-import RequireAuth from "./RequireAuth";
-import RequireAdminAuth from "./RequireAdminAuth";
 import AdminRoot from "./admin_pages/AdminRoot";
 import AdminCreateCategoryPage from "./admin_pages/AdminCreateCategoryPage";
 import AdminUpdateCategoryPage from "./admin_pages/AdminUpdateCategoryPage";
